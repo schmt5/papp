@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+import '../widgets/teddy_card.dart';
+import '../widgets/bell_card.dart';
+
+class DashboardScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        TeddyCard(),
+        BellCard(),
+      ],
+    );
+  }
+}
