@@ -2,6 +2,8 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 
+
+
 class NextAppointmentCard extends StatelessWidget {
   final String category = 'Ergotherapie';
   final DateTime dateTime = DateTime.now();
@@ -48,7 +50,7 @@ class NextAppointmentCard extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(DateFormat.MMMEd().format(dateTime)),
+                  Text(DateFormat.MMMMEEEEd('de_CH').format(dateTime)),
                 ],
               ),
             )

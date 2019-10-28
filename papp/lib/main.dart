@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './screens/home_screen.dart';
 
@@ -9,6 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [const Locale('de_CH')],
       title: 'Papp',
       theme: ThemeData(
         // This is the theme of your application.
@@ -21,7 +28,8 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.teal,
-        accentColor: Colors.amber
+        accentColor: Colors.amber,
+        fontFamily: 'Lato',
       ),
       home: HomeScreen(),
       routes: {},
