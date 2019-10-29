@@ -22,13 +22,13 @@ class TeddyCard extends StatelessWidget {
               ListTile(
                 leading: Icon(
                   Icons.pets,
-                  size: 36.0,
+                  size: 30,
                 ),
                 title: Row(
                   children: <Widget>[
                     Text(
                       'Teddy',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 18),
                       
                     ),
                     Spacer(),
@@ -36,7 +36,7 @@ class TeddyCard extends StatelessWidget {
                       child: Text(
                         'lvl: $level',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),

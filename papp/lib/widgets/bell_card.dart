@@ -14,7 +14,7 @@ class BellCard extends StatelessWidget {
           child: ListTile(
             leading: Icon(
               Icons.notifications,
-              size: 36.0,
+              size: 30,
             ),
             title: Text('$daysLeft Tage'),
             subtitle: Text('bis du die Glocke läuten darfst.'),
