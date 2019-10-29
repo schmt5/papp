@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [const Locale('de_CH')],
+    
       title: 'Papp',
       theme: ThemeData(
         // This is the theme of your application.
