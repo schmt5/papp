@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './screens/home_screen.dart';
+import './screens/appointment_detail_screen.dart';
+import './screens/teddy_screen.dart';
+import './screens/user_screen.dart';
+import './screens/reward_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,11 +32,16 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.teal,
-        accentColor: Colors.amber,
+        accentColor: Colors.orange,
         fontFamily: 'Lato',
       ),
       home: HomeScreen(),
-      routes: {},
+      routes: {
+        AppointmentDetailScreen.routeName: (ctx) => AppointmentDetailScreen(),
+        TeddyScreen.routeName: (ctx) => TeddyScreen(),
+        UserScreen.routeName: (ctx) => UserScreen(),
+        RewardScreen.routeName: (ctx) => RewardScreen(),
+      },
     );
   }
 }

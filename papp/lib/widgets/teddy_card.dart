@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/teddy_screen.dart';
+
 class TeddyCard extends StatelessWidget {
   final int level = 1;
   final int xp = 50;
@@ -11,41 +13,84 @@ class TeddyCard extends StatelessWidget {
       margin: EdgeInsets.all(15),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        child: ListTile(
-          leading: Icon(
-            Icons.pets,
-            size: 36.0,
-          ),
-          title: Row(
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(TeddyScreen.routeName);
+          },
+          child: Column(
             children: <Widget>[
-              Text('Level: $level'),
-              SizedBox(
-                width: 10,
+              ListTile(
+                leading: Icon(
+                  Icons.pets,
+                  size: 36.0,
+                ),
+                title: Row(
+                  children: <Widget>[
+                    Text(
+                      'Teddy',
+                      style: TextStyle(fontSize: 20),
+                      
+                    ),
+                    Spacer(),
+                    Container(
+                      child: Text(
+                        'lvl: $level',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            width: 2,
+                            color: Theme.of(context).primaryColor,
+                          )),
+                    ),
+                  ],
+                ),
               ),
-              Text('XP: $xp')
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: Container(
+              //     child: CircleAvatar(
+              //       child: Text(
+              //         '$level',
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              ListTile(
+                subtitle: Text('$xp Erfahrungspunkte'),
+                title: LayoutBuilder(
+                  builder: (ctx, constraints) {
+                    return Row(
+                      children: <Widget>[
+                        Container(
+                          height: 20,
+                          width: constraints.maxWidth * percentOfNextLevel,
+                          color: Colors.amber[300],
+                        ),
+                        Container(
+                          height: 20,
+                          width:
+                              constraints.maxWidth * (1 - percentOfNextLevel),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            width: 2.0,
+                            color: Colors.amber[300],
+                          )),
+                        )
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
-          ),
-          subtitle: LayoutBuilder(
-            builder: (ctx, constraints) {
-              return Row(
-                children: <Widget>[
-                  Container(
-                    height: 15,
-                    width: constraints.maxWidth * percentOfNextLevel,
-                    color: Colors.amber[300],
-                  ),
-                  Container(
-                    height: 15,
-                    width: constraints.maxWidth * (1 - percentOfNextLevel),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      width: 2.0,
-                      color: Colors.amber[300],
-                    )),
-                  )
-                ],
-              );
-            },
           ),
         ),
       ),
