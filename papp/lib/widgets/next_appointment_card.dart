@@ -11,8 +11,6 @@ class NextAppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var nextAppointment = Provider.of<Appointments>(context).nextItem;
-
     return Card(
       margin: EdgeInsets.all(15),
       child: InkWell(
@@ -45,26 +43,32 @@ class NextAppointmentCard extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(nextAppointment.category),
+                  Consumer<Appointments>(
+                    builder: (ctx, data, child) => Text(data.nextItem.category),
+                  ),
                   Spacer(),
                   Icon(Icons.access_time),
                   SizedBox(
                     width: 5,
                   ),
-                  nextAppointment.dateTime.day == DateTime.now().day &&
-                          nextAppointment.dateTime.month ==
-                              DateTime.now().month &&
-                          nextAppointment.dateTime.year == DateTime.now().year
-                      ? Text(
-                          'Heute um ' +
-                              DateFormat.Hm('de_CH')
-                                  .format(nextAppointment.dateTime) +
-                              ' Uhr',
-                        )
-                      : Text(
-                          DateFormat.MMMMEEEEd('de_CH')
-                              .format(nextAppointment.dateTime),
-                        ),
+                  Consumer<Appointments>(
+                    builder: (ctx, data, child) {
+                      return data.nextItem.dateTime.day == DateTime.now().day &&
+                              data.nextItem.dateTime.month ==
+                                  DateTime.now().month &&
+                              data.nextItem.dateTime.year == DateTime.now().year
+                          ? Text(
+                              'Heute um ' +
+                                  DateFormat.Hm('de_CH')
+                                      .format(data.nextItem.dateTime) +
+                                  ' Uhr',
+                            )
+                          : Text(
+                              DateFormat.MMMMEEEEd('de_CH')
+                                  .format(data.nextItem.dateTime),
+                            );
+                    },
+                  ),
                 ],
               ),
             ),

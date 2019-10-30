@@ -9,6 +9,7 @@ class Appointments with ChangeNotifier {
       id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
       category: "Physiotherapie",
       dateTime: DateTime.now().add(Duration(hours: 1)),
+      
     ),
     AppointmentModel(
       id: DateTime.now().add(Duration(hours: 3)).millisecondsSinceEpoch,
