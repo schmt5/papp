@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import './providers/appointments.dart';
+import './providers/database_provider.dart';
+import './models/appointment_model.dart';
 
 import './screens/home_screen.dart';
 import './screens/appointment_detail_screen.dart';
@@ -10,7 +12,17 @@ import './screens/teddy_screen.dart';
 import './screens/user_screen.dart';
 import './screens/reward_screen.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await DatabaseProvider.dbProvider.db;
+
+  var appointment = AppointmentModel(
+    id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
+    category: "Physiotherapie",
+    dateTime: DateTime.now().add(Duration(hours: 1)),
+  );
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
