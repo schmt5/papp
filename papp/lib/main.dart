@@ -11,15 +11,10 @@ import './screens/appointment_detail_screen.dart';
 import './screens/teddy_screen.dart';
 import './screens/user_screen.dart';
 import './screens/reward_screen.dart';
+import './screens/create_appointment_screen.dart';
 
 void main() async {
   await DatabaseProvider.dbProvider.db;
-
-  var appointment = AppointmentModel(
-    id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
-    category: "Physiotherapie",
-    dateTime: DateTime.now().add(Duration(hours: 1)),
-  );
 
   runApp(MyApp());
 }
@@ -61,6 +56,7 @@ class MyApp extends StatelessWidget {
           TeddyScreen.routeName: (ctx) => TeddyScreen(),
           UserScreen.routeName: (ctx) => UserScreen(),
           RewardScreen.routeName: (ctx) => RewardScreen(),
+          CreateAppointmentScreen.routeName: (ctx) => CreateAppointmentScreen(),
         },
       ),
     );

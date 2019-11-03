@@ -21,6 +21,7 @@ class DatabaseProvider {
       return _db;
     } else {
       _db = await initDatabase();
+      return _db;
     }
   }
 
@@ -55,6 +56,10 @@ class DatabaseProvider {
 
   Future<List<AppointmentModel>> fetchAppointments() async {
     final List<Map<String, dynamic>> maps = await _db.query(_appointmentTable);
+    if (maps.length == 0) {
+      return null;
+    }
+
     return List.generate(
       maps.length,
       (i) => AppointmentModel.fromJson(

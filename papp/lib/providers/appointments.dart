@@ -1,42 +1,74 @@
 import 'package:flutter/foundation.dart';
 
+import './database_provider.dart';
 import '../models/appointment_model.dart';
-import '../models/dummy.dart';
 
 class Appointments with ChangeNotifier {
   List<AppointmentModel> _items = [
-    AppointmentModel(
-      id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
-      category: "Physiotherapie",
-      dateTime: DateTime.now().add(Duration(hours: 1)),
-      
-    ),
-    AppointmentModel(
-      id: DateTime.now().add(Duration(hours: 3)).millisecondsSinceEpoch,
-      category: "Physiotherapie",
-      dateTime: DateTime.now().add(Duration(hours: 3)),
-    ),
-    AppointmentModel(
-      id: DateTime.now().add(Duration(hours: 11)).millisecondsSinceEpoch,
-      category: "Sporttherapie",
-      dateTime: DateTime.now().add(Duration(hours: 11)),
-    ),
-    AppointmentModel(
-      id: DateTime.now().add(Duration(hours: 14)).millisecondsSinceEpoch,
-      category: "Ergotherapie",
-      dateTime: DateTime.now().add(Duration(hours: 14)),
-    ),
-  ];
+    // AppointmentModel(
+    //   id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
+    //   category: "Physiotherapie",
+    //   dateTime: DateTime.now().add(Duration(hours: 1)),
 
+    // ),
+    // AppointmentModel(
+    //   id: DateTime.now().add(Duration(hours: 3)).millisecondsSinceEpoch,
+    //   category: "Physiotherapie",
+    //   dateTime: DateTime.now().add(Duration(hours: 3)),
+    // ),
+    // AppointmentModel(
+    //   id: DateTime.now().add(Duration(hours: 11)).millisecondsSinceEpoch,
+    //   category: "Sporttherapie",
+    //   dateTime: DateTime.now().add(Duration(hours: 11)),
+    // ),
+    // AppointmentModel(
+    //   id: DateTime.now().add(Duration(hours: 14)).millisecondsSinceEpoch,
+    //   category: "Ergotherapie",
+    //   dateTime: DateTime.now().add(Duration(hours: 14)),
+    // ),
+  ];
 
   List<AppointmentModel> get items {
     return [..._items];
   }
 
   AppointmentModel get nextItem {
-    _items.sort((val, valNext) => val.dateTime.compareTo(valNext.dateTime));
-    var nextAppointment = _items[0];
+    if (_items.isEmpty) {
+      return null;
+    }
+    var upcoming = _items
+        .where((val) => val.dateTime.compareTo(DateTime.now()) >= 0)
+        .toList();
+
+    if (upcoming.isEmpty) {
+      return null;
+    }
+
+    upcoming.sort((val, valNext) => val.dateTime.compareTo(valNext.dateTime));
+    var nextAppointment = upcoming[0];
     return nextAppointment;
   }
 
+  // SQFlite
+  Future<void> fetchAndSetAppointments() async {
+    var fetchedItems = await DatabaseProvider.dbProvider.fetchAppointments();
+    if (fetchedItems == null) {
+      _items = [];
+    } else {
+      _items = fetchedItems;
+    }
+    notifyListeners();
+  }
+
+  Future<AppointmentModel> getAppointmentById(int id) async {
+    var appointment =
+        await DatabaseProvider.dbProvider.fetchAppointmentById(id);
+    return appointment;
+  }
+
+  void addAppointment(AppointmentModel appointment) {
+    _items.add(appointment);
+    DatabaseProvider.dbProvider.insertAppointment(appointment);
+    notifyListeners();
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './dashbord_screen.dart';
 import './appointment_overview_screen.dart';
 
+import '../screens/create_appointment_screen.dart';
 import '../widgets/app_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +39,10 @@ class _HomeScreenState extends State<HomeScreen>
         : FloatingActionButton.extended(
             label: Text('Neuer Termin erfassen'),
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(CreateAppointmentScreen.routeName);
+            },
           );
   }
 

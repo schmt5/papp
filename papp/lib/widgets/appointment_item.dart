@@ -29,7 +29,7 @@ class AppointmentItem extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.access_time),
             title: Text(
-              DateFormat.MMMMEEEEd('de_CH').format(dateTime) + 'Uhr',
+              DateFormat.MMMMEEEEd('de_CH').format(dateTime) + ', ' + DateFormat.Hm('de_CH').format(dateTime),
             ),
           ),
           ButtonBar(
