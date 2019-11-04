@@ -13,18 +13,18 @@ class AppointmentOverviewScreen extends StatelessWidget {
       builder: (ctx, snapshot) {
         return Consumer<Appointments>(
           builder: (ctx, data, child) => ListView.separated(
-            itemCount: data.items.length,
+            itemCount: data.upcomingItems.length,
             itemBuilder: (ctx, i) => AppointmentItem(
-              id: data.items[i].id,
-              category: data.items[i].category,
-              dateTime: data.items[i].dateTime,
-              place: data.items[i].place,
-              supervisor: data.items[i].supervisor,
+              id: data.upcomingItems[i].id,
+              category: data.upcomingItems[i].category,
+              dateTime: data.upcomingItems[i].dateTime,
+              place: data.upcomingItems[i].place,
+              supervisor: data.upcomingItems[i].supervisor,
             ),
             separatorBuilder: (ctx, i) {
-              var j = i == (data.items.length - 1) ? i : i + 1;
-              return (data.items[i].dateTime.day == DateTime.now().day &&
-                      data.items[j].dateTime.day != DateTime.now().day)
+              var j = i == (data.upcomingItems.length - 1) ? i : i + 1;
+              return (data.upcomingItems[i].dateTime.day == DateTime.now().day &&
+                      data.upcomingItems[j].dateTime.day != DateTime.now().day)
                   ? Container(
                       width: double.infinity,
                       height: 5,

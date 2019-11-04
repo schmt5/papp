@@ -32,12 +32,23 @@ class Appointments with ChangeNotifier {
     return [..._items];
   }
 
+  List<AppointmentModel> get upcomingItems {
+    var upcoming = _items.where((val) {
+      var now = DateTime.now();
+      var midnight = DateTime(now.year, now.month, now.day);
+      return val.dateTime.isAfter(midnight);
+    }).toList();
+   
+    upcoming.sort((val, valNext) => val.dateTime.compareTo(valNext.dateTime));
+    return upcoming;
+  }
+
   AppointmentModel get nextItem {
     if (_items.isEmpty) {
       return null;
     }
     var upcoming = _items
-        .where((val) => val.dateTime.compareTo(DateTime.now()) >= 0)
+        .where((val) => val.dateTime.isAfter(DateTime.now()))
         .toList();
 
     if (upcoming.isEmpty) {

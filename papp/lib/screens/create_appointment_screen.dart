@@ -214,7 +214,26 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    var year = _selectedDate.year;
+                    var month = _selectedDate.month;
+                    var day = _selectedDate.day;
+                    var hour = _selectedTime.hour;
+                    var minute = _selectedTime.minute;
+                    var second = _selectedDate.second;
+                    var millisecond = _selectedDate.millisecond;
+
+                    var dateTime = DateTime(
+                        year, month, day, hour, minute, second, millisecond);
+
+                    var appointment = AppointmentModel(
+                      id: dateTime.millisecondsSinceEpoch,
+                      category: "Physiotherapie",
+                      dateTime: dateTime,
+                    );
+                    Provider.of<Appointments>(context, listen: false)
+                        .addAppointment(appointment);
+                  },
                 ),
               )
             ],
