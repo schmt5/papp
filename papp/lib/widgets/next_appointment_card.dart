@@ -15,102 +15,87 @@ class NextAppointmentCard extends StatelessWidget {
       future: Provider.of<Appointments>(context, listen: false)
           .fetchAndSetAppointments(),
       builder: (ctx, snapshot) {
-        // if (snapshot.connectionState == ConnectionState.waiting) {
-        //   return Center(
-        //     child: CircularProgressIndicator(),
-        //   );
-        // } else {
-          return Consumer<Appointments>(
-            builder: (ctx, data, child) {
-              
-              return data.nextItem == null
-                  ? Container()
-                  : Card(
-                      margin: EdgeInsets.all(15),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+        return Consumer<Appointments>(
+          builder: (ctx, data, child) {
+            return data.nextItem == null
+                ? Container()
+                : Card(
+                    margin: EdgeInsets.all(15),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Nächster Termin',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                              child: Center(
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.access_time),
+                            title: Text(
+                              DateFormat.Hm('de_CH')
+                                      .format(data.nextItem.dateTime) +
+                                  ' Uhr',
+                            ),
+                            subtitle: Text(data.nextItem.category),
+                          ),
+                          // ListTile(
+                          //   leading: Icon(Icons.access_time),
+                          //   title: data.nextItem.dateTime.day ==
+                          //               DateTime.now().day &&
+                          //           data.nextItem.dateTime.month ==
+                          //               DateTime.now().month &&
+                          //           data.nextItem.dateTime.year ==
+                          //               DateTime.now().year
+                          //       ? Text(
+                          //           'Heute um ' +
+                          //               DateFormat.Hm('de_CH')
+                          //                   .format(data.nextItem.dateTime) +
+                          //               ' Uhr',
+                          //         )
+                          //       : Text(
+                          //           DateFormat.MMMMEEEEd('de_CH')
+                          //               .format(data.nextItem.dateTime),
+                          //         ),
+                          // ),
+                          ButtonBar(
+                            children: <Widget>[
+                              RaisedButton(
                                 child: Text(
-                                  'Nächster Termin',
+                                  'Taler sammeln',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
                                     color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                onPressed: () {},
+                                color: Theme.of(context).accentColor,
                               ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(Icons.category),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Consumer<Appointments>(
-                                    builder: (ctx, data, child) =>
-                                        Text(data.nextItem.category),
-                                  ),
-                                  Spacer(),
-                                  Icon(Icons.access_time),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  data.nextItem.dateTime.day ==
-                                              DateTime.now().day &&
-                                          data.nextItem.dateTime.month ==
-                                              DateTime.now().month &&
-                                          data.nextItem.dateTime.year ==
-                                              DateTime.now().year
-                                      ? Text(
-                                          'Heute um ' +
-                                              DateFormat.Hm('de_CH').format(
-                                                  data.nextItem.dateTime) +
-                                              ' Uhr',
-                                        )
-                                      : Text(
-                                          DateFormat.MMMMEEEEd('de_CH')
-                                              .format(data.nextItem.dateTime),
-                                        ),
-                                ],
+                              OutlineButton(
+                                child: Text('Details'),
+                                onPressed: () {},
                               ),
-                            ),
-                            ButtonBar(
-                              children: <Widget>[
-                                RaisedButton(
-                                  child: Text(
-                                    'Taler sammeln',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  onPressed: () {},
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                OutlineButton(
-                                  child: Text('Details'),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
-                    );
-            },
-          );
-//        }
+                    ),
+                  );
+          },
+        );
       },
     );
   }

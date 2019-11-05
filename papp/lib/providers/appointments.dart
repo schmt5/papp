@@ -4,29 +4,7 @@ import './database_provider.dart';
 import '../models/appointment_model.dart';
 
 class Appointments with ChangeNotifier {
-  List<AppointmentModel> _items = [
-    // AppointmentModel(
-    //   id: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
-    //   category: "Physiotherapie",
-    //   dateTime: DateTime.now().add(Duration(hours: 1)),
-
-    // ),
-    // AppointmentModel(
-    //   id: DateTime.now().add(Duration(hours: 3)).millisecondsSinceEpoch,
-    //   category: "Physiotherapie",
-    //   dateTime: DateTime.now().add(Duration(hours: 3)),
-    // ),
-    // AppointmentModel(
-    //   id: DateTime.now().add(Duration(hours: 11)).millisecondsSinceEpoch,
-    //   category: "Sporttherapie",
-    //   dateTime: DateTime.now().add(Duration(hours: 11)),
-    // ),
-    // AppointmentModel(
-    //   id: DateTime.now().add(Duration(hours: 14)).millisecondsSinceEpoch,
-    //   category: "Ergotherapie",
-    //   dateTime: DateTime.now().add(Duration(hours: 14)),
-    // ),
-  ];
+  List<AppointmentModel> _items = [];
 
   List<AppointmentModel> get items {
     return [..._items];
@@ -38,7 +16,7 @@ class Appointments with ChangeNotifier {
       var midnight = DateTime(now.year, now.month, now.day);
       return val.dateTime.isAfter(midnight);
     }).toList();
-   
+
     upcoming.sort((val, valNext) => val.dateTime.compareTo(valNext.dateTime));
     return upcoming;
   }
@@ -47,9 +25,8 @@ class Appointments with ChangeNotifier {
     if (_items.isEmpty) {
       return null;
     }
-    var upcoming = _items
-        .where((val) => val.dateTime.isAfter(DateTime.now()))
-        .toList();
+    var upcoming =
+        _items.where((val) => val.dateTime.isAfter(DateTime.now())).toList();
 
     if (upcoming.isEmpty) {
       return null;

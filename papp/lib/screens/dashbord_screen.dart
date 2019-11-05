@@ -7,7 +7,7 @@ import '../widgets/next_appointment_card.dart';
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         TeddyCard(),
         BellCard(),
