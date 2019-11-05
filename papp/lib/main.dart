@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.teal,
+          primaryColor: Colors.teal[800],
           accentColor: Colors.amber,
           fontFamily: 'Lato',
         ),

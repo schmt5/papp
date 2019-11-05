@@ -31,6 +31,65 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     earnedPappTaler: null,
   );
 
+  // for TherapieForm
+  var typeOfTherapie = [
+    'AOT (alltagsorientiertes Training)',
+    'Ergotherapie',
+    'Heilpädagogische Früherziehung (HFE)',
+    'Heilpädagogisches Reiten',
+    'Hippotherapie',
+    'Hundetherapie',
+    'Koch- und Backgruppe',
+    'KreAktiv Schule',
+    'KreAktiv Therapie',
+    'Logopädie',
+    'MTT (medizinische Trainingstherapie)',
+    'Neuropsychologie',
+    'Physiotherapie',
+    'Physiotherapie Wasser',
+    'PluSport',
+    'Psychologie',
+    'Robotik obere Extremitäten',
+    'Robotik untere Extremitäten (Andago)',
+    'Robotik untere Extremitäten (Erigo)',
+    'Robotik untere Extremitäten (Lokomat)',
+    'Robotik untere Extremitäten (Rysen)',
+    'Schule',
+    'Sport',
+    'Therapeutische Spielgruppe'
+  ];
+
+  List<String> searchItems = [];
+  String _selectedTherapie;
+  TextEditingController _therapieFieldController = TextEditingController();
+
+  _filterSearchResults(String query) {
+    List<String> searchResult = [];
+    if (query.isNotEmpty) {
+      searchResult = typeOfTherapie
+          .where(
+            (item) => item.toLowerCase().startsWith(query.toLowerCase()),
+          )
+          .toList();
+
+      setState(() {
+        searchItems.clear();
+        searchItems.addAll(searchResult);
+      });
+    } else {
+      setState(() {
+        searchItems.clear();
+      });
+    }
+  }
+
+  _setTherapie(String item) {
+    searchItems.clear();
+    setState(() {
+      _therapieFieldController.text = item;
+    });
+  }
+
   void _selectDate() {
     showDatePicker(
       context: context,
@@ -62,66 +121,57 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   }
 
   void _saveForm() {
+    var isValid;
     if (isSelected[0]) {
-      var isValid = _therapieForm.currentState.validate();
+      // Therapie Form
+      isValid = _therapieForm.currentState.validate();
     } else {
-      var isValid = _privateAppointmentForm.currentState.validate();
+      // Private Appointment Form
+      isValid = _privateAppointmentForm.currentState.validate();
+    }
+    if (!isValid) {
+      return;
     }
 
-    // var year = _selectedDate.year;
-    // var month = _selectedDate.month;
-    // var day = _selectedDate.day;
-    // var hour = _selectedTime.hour;
-    // var minute = _selectedTime.minute;
-    // var second = _selectedDate.second;
-    // var millisecond = _selectedDate.millisecond;
+    // Get values from _selectedDate and _selectedTime
+    var year = _selectedDate.year;
+    var month = _selectedDate.month;
+    var day = _selectedDate.day;
+    var hour = _selectedTime.hour;
+    var minute = _selectedTime.minute;
+    var second = _selectedDate.second;
+    var millisecond = _selectedDate.millisecond;
 
-    // var dateTime =
-    //     DateTime(year, month, day, hour, minute, second, millisecond);
+    // create new DateTime including selected Date and selected Time
+    // second and millisecond are importent for the id of the appointment.
+    var dateTime =
+        DateTime(year, month, day, hour, minute, second, millisecond);
 
-    // var appointment = AppointmentModel(
-    //   id: dateTime.millisecondsSinceEpoch,
-    //   category: "Physiotherapie",
-    //   dateTime: dateTime,
-    // );
-    // Provider.of<Appointments>(context, listen: false)
-    //     .addAppointment(appointment);
+    // create AppointmentModel with id and dateTime
+    _createdItem = AppointmentModel(
+      id: dateTime.millisecondsSinceEpoch,
+      category: null,
+      dateTime: dateTime,
+    );
+
+    // save Form, this add the other values (category, place, supervisor)
+    if (isSelected[0]) {
+      _therapieForm.currentState.save();
+
+      // insert createdItem into Database
+      Provider.of<Appointments>(context, listen: false)
+          .addAppointment(_createdItem);
+    } else {
+      _privateAppointmentForm.currentState.save();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       appBar: AppBar(
         title: Text('Neuer Termin'),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: showFab
-      //     ? FloatingActionButton.extended(
-      //         icon: Icon(Icons.save),
-      //         label: Text('Speichern'),
-      //         onPressed: () {
-      //           var year = _selectedDate.year;
-      //           var month = _selectedDate.month;
-      //           var day = _selectedDate.day;
-      //           var hour = _selectedTime.hour;
-      //           var minute = _selectedTime.minute;
-      //           var second = _selectedDate.second;
-      //           var millisecond = _selectedDate.millisecond;
-
-      //           var dateTime = DateTime(
-      //               year, month, day, hour, minute, second, millisecond);
-
-      //           var appointment = AppointmentModel(
-      //             id: dateTime.millisecondsSinceEpoch,
-      //             category: "Physiotherapie",
-      //             dateTime: dateTime,
-      //           );
-      //           Provider.of<Appointments>(context, listen: false)
-      //               .addAppointment(appointment);
-      //         },
-      //       )
-      //     : null,
       body: Padding(
         padding: EdgeInsets.all(16),
         child: ListView(
@@ -196,17 +246,51 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            decoration: InputDecoration(labelText: 'Art der Therapie'),
+            onChanged: (val) {
+              _filterSearchResults(val);
+            },
+            controller: _therapieFieldController,
+            decoration: InputDecoration(
+                labelText: 'Art der Therapie',
+                icon: Icon(
+                  Icons.search,
+                )),
             validator: (val) {
               if (val.isEmpty) {
                 return 'Therapie Form muss angegeben werden';
               }
               return null;
             },
-            
+            onSaved: (val) {
+              _createdItem = AppointmentModel(
+                id: _createdItem.id,
+                category: val,
+                dateTime: _createdItem.dateTime,
+                place: _createdItem.place,
+                subject: _createdItem.subject,
+                supervisor: _createdItem.supervisor,
+                earnedPappTaler: _createdItem.earnedPappTaler,
+              );
+            },
           ),
           SizedBox(
             height: 16,
+          ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: searchItems
+                  .map((item) => InkWell(
+                        onTap: () {
+                          _setTherapie(item);
+                        },
+                        child: ListTile(
+                          title: Text(item),
+                          trailing: Icon(Icons.arrow_forward),
+                        ),
+                      ))
+                  .toList(),
+            ),
           ),
           FormField(
             validator: (_) {
@@ -272,7 +356,6 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               trailing: RaisedButton(
                 child: Text(
                   'wählen',
-               
                 ),
                 onPressed: _selectTime,
                 color: Theme.of(context).accentColor,
@@ -288,17 +371,41 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
           ),
           TextFormField(
             decoration: InputDecoration(
-                labelText: 'Ort',
-                icon: Icon(
-                  Icons.location_on,
-                )),
+              labelText: 'Ort',
+              icon: Icon(
+                Icons.location_on,
+              ),
+            ),
+            onSaved: (val) {
+              _createdItem = AppointmentModel(
+                id: _createdItem.id,
+                category: _createdItem.category,
+                dateTime: _createdItem.dateTime,
+                place: val,
+                subject: _createdItem.subject,
+                supervisor: _createdItem.supervisor,
+                earnedPappTaler: _createdItem.earnedPappTaler,
+              );
+            },
           ),
           TextFormField(
             decoration: InputDecoration(
-                labelText: 'Therapeut',
-                icon: Icon(
-                  Icons.person,
-                )),
+              labelText: 'Therapeut',
+              icon: Icon(
+                Icons.person,
+              ),
+            ),
+            onSaved: (val) {
+              _createdItem = AppointmentModel(
+                id: _createdItem.id,
+                category: _createdItem.category,
+                dateTime: _createdItem.dateTime,
+                place: _createdItem.place,
+                subject: _createdItem.subject,
+                supervisor: val,
+                earnedPappTaler: _createdItem.earnedPappTaler,
+              );
+            },
           ),
         ],
       ),
