@@ -6,14 +6,14 @@ class AppointmentItem extends StatelessWidget {
   final String category;
   final DateTime dateTime;
   final String place;
-  final String supervisor;
+ 
 
   AppointmentItem({
     @required this.id,
     @required this.category,
     @required this.dateTime,
     this.place,
-    this.supervisor,
+
   });
 
   @override

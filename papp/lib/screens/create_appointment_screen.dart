@@ -27,19 +27,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   List<bool> isSelected = [true, false, false];
 
   AppointmentModel _createdItem;
-  // var _createdTherapyItem = TherapyModel(
-  //   id: null,
-  //   type: null,
-  //   title: null,
-  //   dateTime: null,
-  //   duration: null,
-  //   place: null,
-  //   subject: null,
-  //   earnedPappTaler: null,
-  //   supervisor: null,
-  // );
 
-  // for TherapieForm
   var typeOfTherapie = [
     'AOT (alltagsorientiertes Training)',
     'Ergotherapie',
@@ -133,9 +121,12 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     if (isSelected[0]) {
       // Therapie Form
       isValid = _therapieForm.currentState.validate();
-    } else {
+    } else if (isSelected[1]) {
       // Private Appointment Form
       isValid = _privateAppointmentForm.currentState.validate();
+    } else {
+      // Exercise Form
+      isValid = _exerciseForm.currentState.validate();
     }
     if (!isValid) {
       return;
@@ -155,7 +146,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     var dateTime =
         DateTime(year, month, day, hour, minute, second, millisecond);
 
-    // create AppointmentModel with id and dateTime
+    // create AppointmentModel with id, type and dateTime
     if (isSelected[0]) {
       // Therapy
       _createdItem = TherapyModel(
@@ -186,11 +177,21 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     if (isSelected[0]) {
       _therapieForm.currentState.save();
 
-      // insert createdItem into Database
+      // insert createdItem [TherapyModel] into Database
+      Provider.of<Appointments>(context, listen: false)
+          .addAppointment(_createdItem);
+    } else if (isSelected[1]) {
+      _privateAppointmentForm.currentState.save();
+
+      // insert createdItem [PrivateAppointmentModel] into Database
       Provider.of<Appointments>(context, listen: false)
           .addAppointment(_createdItem);
     } else {
-      _privateAppointmentForm.currentState.save();
+      _exerciseForm.currentState.save();
+
+      // insert createdItem [ExerciseModel] into Database
+      Provider.of<Appointments>(context, listen: false)
+          .addAppointment(_createdItem);
     }
   }
 
@@ -446,6 +447,9 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                 }
                 return null;
               },
+              onSaved: (val) {
+                _createdItem.title = val;
+              },
             ),
           ),
           SizedBox(
@@ -545,6 +549,9 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   return 'Titel muss angegeben werden';
                 }
                 return null;
+              },
+              onSaved: (val) {
+                _createdItem.title = val;
               },
             ),
           ),
