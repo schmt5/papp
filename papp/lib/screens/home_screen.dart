@@ -37,7 +37,12 @@ class _HomeScreenState extends State<HomeScreen>
     return _tabController.index == 0
         ? null
         : FloatingActionButton.extended(
-            label: Text('Neuer Termin erfassen'),
+            label: Text(
+              'Neuer Termin erfassen',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             icon: Icon(Icons.add),
             onPressed: () {
               Navigator.of(context)

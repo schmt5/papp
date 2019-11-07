@@ -16,20 +16,38 @@ class AppointmentOverviewScreen extends StatelessWidget {
             itemCount: data.upcomingItems.length,
             itemBuilder: (ctx, i) => AppointmentItem(
               id: data.upcomingItems[i].id,
-              category: data.upcomingItems[i].title,
+              type: data.upcomingItems[i].type,
+              title: data.upcomingItems[i].title,
               dateTime: data.upcomingItems[i].dateTime,
               place: data.upcomingItems[i].place,
             ),
             separatorBuilder: (ctx, i) {
               var j = i == (data.upcomingItems.length - 1) ? i : i + 1;
-              return (data.upcomingItems[i].dateTime.day == DateTime.now().day &&
-                      data.upcomingItems[j].dateTime.day != DateTime.now().day)
-                  ? Container(
-                      width: double.infinity,
-                      height: 5,
-                      color: Colors.grey,
-                    )
-                  : Container();
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child:
+                    (data.upcomingItems[i].dateTime.day == DateTime.now().day &&
+                            data.upcomingItems[j].dateTime.day !=
+                                DateTime.now().day)
+                        ? Container(
+                            width: double.infinity,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.black54,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Nicht mehr heute',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
+              );
             },
           ),
         );

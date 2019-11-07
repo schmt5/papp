@@ -428,7 +428,12 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
           padding: const EdgeInsets.symmetric(
             vertical: 16,
           ),
-          child: Text('Speichern'),
+          child: Text(
+            'Speichern',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         icon: Icon(Icons.save),
         color: Theme.of(context).accentColor,

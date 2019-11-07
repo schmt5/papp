@@ -50,7 +50,11 @@ class NextAppointmentCard extends StatelessWidget {
                                       .format(data.nextItem.dateTime) +
                                   ' Uhr',
                             ),
-                            subtitle: Text(data.nextItem.title),
+                            subtitle: Text(data.nextItem.title, style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).primaryColor,
+                            ),),
                           ),
                           // ListTile(
                           //   leading: Icon(Icons.access_time),
@@ -77,8 +81,8 @@ class NextAppointmentCard extends StatelessWidget {
                                 child: Text(
                                   'Taler sammeln',
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 onPressed: () {},
