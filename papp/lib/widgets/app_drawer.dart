@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/reward_screen.dart';
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.cake),
             title: Text('Belohnung'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(RewardScreen.routeName);
+            },
           ),
           ListTile(
             leading: Icon(Icons.trending_up),
