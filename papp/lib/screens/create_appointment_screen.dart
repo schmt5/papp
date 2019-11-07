@@ -280,23 +280,23 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               },
             ),
           ),
-          SizedBox(
-            height: 16,
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: searchItems
-                  .map((item) => InkWell(
-                        onTap: () {
-                          _setTherapie(item);
-                        },
-                        child: ListTile(
-                          title: Text(item),
-                          trailing: Icon(Icons.arrow_forward),
-                        ),
-                      ))
-                  .toList(),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: searchItems
+                    .map((item) => InkWell(
+                          onTap: () {
+                            _setTherapie(item);
+                          },
+                          child: ListTile(
+                            title: Text(item),
+                            trailing: Icon(Icons.arrow_forward),
+                          ),
+                        ))
+                    .toList(),
+              ),
             ),
           ),
           searchItems.isNotEmpty
@@ -304,77 +304,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    FormField(
-                      validator: (_) {
-                        if (_selectedDate == null) {
-                          return 'Datum muss ausgewählt werden';
-                        }
-                        return null;
-                      },
-                      builder: (state) => ListTile(
-                        leading: Icon(Icons.calendar_today),
-                        title: _selectedDate == null
-                            ? Text(
-                                'Tag wählen...',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )
-                            : Text(
-                                DateFormat.MMMEd('de_CH').format(_selectedDate),
-                              ),
-                        subtitle: state.hasError
-                            ? Text(
-                                state.errorText,
-                                style: TextStyle(
-                                  color: Colors.redAccent[700],
-                                  fontSize: 12,
-                                ),
-                              )
-                            : Container(),
-                        trailing: RaisedButton(
-                          child: Text(
-                            'wählen',
-                          ),
-                          onPressed: _selectDate,
-                          color: Theme.of(context).accentColor,
-                        ),
-                      ),
-                    ),
-                    FormField(
-                      validator: (_) {
-                        if (_selectedTime == null) {
-                          return 'Tag muss ausgewählt werden';
-                        }
-                        return null;
-                      },
-                      builder: (state) => ListTile(
-                        leading: Icon(Icons.access_time),
-                        title: _selectedTime == null
-                            ? Text(
-                                'Uhrzeit wählen...',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )
-                            : Text(
-                                '${_selectedTime.hour}:${_selectedTime.minute} Uhr'),
-                        subtitle: state.hasError
-                            ? Text(
-                                state.errorText,
-                                style: TextStyle(
-                                    color: Colors.redAccent[700], fontSize: 12),
-                              )
-                            : Container(),
-                        trailing: RaisedButton(
-                          child: Text(
-                            'wählen',
-                          ),
-                          onPressed: _selectTime,
-                          color: Theme.of(context).accentColor,
-                        ),
-                      ),
-                    ),
+                    _buildDateTimePicker(),
                     Divider(),
                     Text(
                       'optional',
@@ -452,9 +382,69 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               },
             ),
           ),
-          SizedBox(
-            height: 16,
+          _buildDateTimePicker(),
+          _buildSaveButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExerciseForm() {
+    return Form(
+      key: _exerciseForm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Titel der Übung',
+                icon: Icon(Icons.title),
+              ),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Titel muss angegeben werden';
+                }
+                return null;
+              },
+              onSaved: (val) {
+                _createdItem.title = val;
+              },
+            ),
           ),
+          _buildDateTimePicker(),
+          _buildSaveButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18, left: 8, right: 8),
+      child: RaisedButton.icon(
+        label: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          child: Text('Speichern'),
+        ),
+        icon: Icon(Icons.save),
+        color: Theme.of(context).accentColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        onPressed: _saveForm,
+      ),
+    );
+  }
+
+  Widget _buildDateTimePicker() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Column(
+        children: <Widget>[
           FormField(
             validator: (_) {
               if (_selectedDate == null) {
@@ -525,58 +515,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               ),
             ),
           ),
-          _buildSaveButton(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildExerciseForm() {
-    return Form(
-      key: _exerciseForm,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Titel der Übung',
-                icon: Icon(Icons.title),
-              ),
-              validator: (val) {
-                if (val.isEmpty) {
-                  return 'Titel muss angegeben werden';
-                }
-                return null;
-              },
-              onSaved: (val) {
-                _createdItem.title = val;
-              },
-            ),
-          ),
-          _buildSaveButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSaveButton() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 18, left: 8, right: 8),
-      child: RaisedButton.icon(
-        label: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-          ),
-          child: Text('Speichern'),
-        ),
-        icon: Icon(Icons.save),
-        color: Theme.of(context).accentColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        onPressed: _saveForm,
       ),
     );
   }
