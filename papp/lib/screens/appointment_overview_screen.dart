@@ -16,10 +16,9 @@ class AppointmentOverviewScreen extends StatelessWidget {
             itemCount: data.upcomingItems.length,
             itemBuilder: (ctx, i) => AppointmentItem(
               id: data.upcomingItems[i].id,
-              category: data.upcomingItems[i].category,
+              category: data.upcomingItems[i].title,
               dateTime: data.upcomingItems[i].dateTime,
               place: data.upcomingItems[i].place,
-              supervisor: data.upcomingItems[i].supervisor,
             ),
             separatorBuilder: (ctx, i) {
               var j = i == (data.upcomingItems.length - 1) ? i : i + 1;

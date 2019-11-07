@@ -6,6 +6,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/appointment_model.dart';
+import '../models/therapy_model.dart';
+import '../models/private_appointment_model.dart';
+import '../models/exercise_model.dart';
 
 class DatabaseProvider {
 // using singleton pattern
@@ -41,12 +44,14 @@ class DatabaseProvider {
           CREATE TABLE $_appointmentTable
           (
             id INTEGER PRIMARY KEY,
-            category TEXT,
+            type TEXT,
+            title TEXT,
             dateTime TEXT,
+            duration INTEGER,
             place TEXT,
-            supervisor TEXT,
+            subject TEXT,
             earnedPappTaler INTEGER,
-            subject TEXT
+            supervisor TEXT
           )
         ''');
       },
@@ -60,12 +65,18 @@ class DatabaseProvider {
       return null;
     }
 
-    return List.generate(
-      maps.length,
-      (i) => AppointmentModel.fromJson(
-        maps[i],
-      ),
-    );
+    return List.generate(maps.length, (i) {
+      if (maps[i]['type'] == 0) {
+        // Therapy
+        return TherapyModel.fromJson(maps[i]);
+      } else if (maps[i]['type'] == 1) {
+        // Private Appointment
+        return PrivateAppointmentModel.fromJson(maps[i]);
+      } else {
+        // Exercise
+        return ExerciseModel.fromJson(maps[i]);
+      }
+    });
   }
 
   Future<AppointmentModel> fetchAppointmentById(int id) async {
@@ -79,7 +90,17 @@ class DatabaseProvider {
     if (appointment == null) {
       return null;
     }
-    return AppointmentModel.fromJson(appointment);
+
+    if (appointment['type'] == 0) {
+      // Therapy
+      return TherapyModel.fromJson(appointment);
+    } else if (appointment['type'] == 1) {
+      // Private Appointment
+      return PrivateAppointmentModel.fromJson(appointment);
+    } else {
+      // Exercise
+      return ExerciseModel.fromJson(appointment);
+    }
   }
 
   void insertAppointment(AppointmentModel appointment) {

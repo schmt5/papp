@@ -1,41 +1,52 @@
 import 'package:flutter/foundation.dart';
 
-class AppointmentModel {
-  final int id;
-  final String category;
-  final DateTime dateTime;
-  final String place;
-  final String supervisor;
-  final int earnedPappTaler;
-  final String subject;
+import './appointment_type.dart';
 
-  AppointmentModel(
-      {@required this.id,
-      @required this.category,
-      @required this.dateTime,
-      this.place,
-      this.supervisor,
-      this.earnedPappTaler,
-      this.subject = 'Patient'});
+abstract class AppointmentModel {
+  int id;
+  AppointmentType type;
+  String title;
+  DateTime dateTime;
+  Duration duration;
+  String place;
+  String subject;
 
-  AppointmentModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        category = json['category'],
-        dateTime = DateTime.parse(json['dateTime']),
-        place = json['place'],
-        supervisor = json['supervisor'],
-        earnedPappTaler = json['earnedPappTaler'],
-        subject = json['subject'];
+  Map<String, dynamic> toMap();
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'category': category,
-      'dateTime': dateTime.toIso8601String(),
-      'place': place,
-      'supervisor': supervisor,
-      'earnedPappTaler': earnedPappTaler,
-      'subject': subject,
-    };
-  }
+
+
+  // AppointmentModel({
+  //   @required this.id,
+  //   @required this.type,
+  //   @required this.title,
+  //   @required this.dateTime,
+  //   this.duration,
+  //   this.place,
+  //   this.earnedPappTaler,
+  //   this.subject = 'Patient',
+  // });
+
+//   AppointmentModel.fromJson(Map<String, dynamic> json)
+    
+//       : id = json['id'],
+//         type = 0,
+//         title = json['title'],
+//         dateTime = DateTime.parse(json['dateTime']),
+//         duration = Duration(minutes: json['duration']),
+//         place = json['place'],
+//         earnedPappTaler = json['earnedPappTaler'],
+//         subject = json['subject'];
+
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'id': id,
+//       'title': title,
+//       'dateTime': dateTime.toIso8601String(),
+//       'duration': duration.inMinutes,
+//       'place': place,
+//       'supervisor': supervisor,
+//       'earnedPappTaler': earnedPappTaler,
+//       'subject': subject,
+//     };
+//   }
 }

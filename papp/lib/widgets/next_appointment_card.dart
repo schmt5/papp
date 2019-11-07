@@ -50,7 +50,7 @@ class NextAppointmentCard extends StatelessWidget {
                                       .format(data.nextItem.dateTime) +
                                   ' Uhr',
                             ),
-                            subtitle: Text(data.nextItem.category),
+                            subtitle: Text(data.nextItem.title),
                           ),
                           // ListTile(
                           //   leading: Icon(Icons.access_time),

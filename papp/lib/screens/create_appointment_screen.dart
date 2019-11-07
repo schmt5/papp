@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../providers/appointments.dart';
 import '../models/appointment_model.dart';
+import '../models/therapy_model.dart';
+import '../models/private_appointment_model.dart';
+import '../models/exercise_model.dart';
+import '../models/appointment_type.dart';
 
 class CreateAppointmentScreen extends StatefulWidget {
   static const routeName = '/create-appointment';
@@ -17,19 +21,23 @@ class CreateAppointmentScreen extends StatefulWidget {
 class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   final _therapieForm = GlobalKey<FormState>();
   final _privateAppointmentForm = GlobalKey<FormState>();
+  final _exerciseForm = GlobalKey<FormState>();
   DateTime _selectedDate;
   TimeOfDay _selectedTime;
   List<bool> isSelected = [true, false, false];
 
-  AppointmentModel _createdItem = AppointmentModel(
-    id: null,
-    category: null,
-    dateTime: null,
-    place: null,
-    supervisor: null,
-    subject: null,
-    earnedPappTaler: null,
-  );
+  AppointmentModel _createdItem;
+  // var _createdTherapyItem = TherapyModel(
+  //   id: null,
+  //   type: null,
+  //   title: null,
+  //   dateTime: null,
+  //   duration: null,
+  //   place: null,
+  //   subject: null,
+  //   earnedPappTaler: null,
+  //   supervisor: null,
+  // );
 
   // for TherapieForm
   var typeOfTherapie = [
@@ -148,11 +156,31 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
         DateTime(year, month, day, hour, minute, second, millisecond);
 
     // create AppointmentModel with id and dateTime
-    _createdItem = AppointmentModel(
-      id: dateTime.millisecondsSinceEpoch,
-      category: null,
-      dateTime: dateTime,
-    );
+    if (isSelected[0]) {
+      // Therapy
+      _createdItem = TherapyModel(
+        id: dateTime.millisecondsSinceEpoch,
+        type: AppointmentType.Therapie,
+        title: null,
+        dateTime: dateTime,
+      );
+    } else if (isSelected[1]) {
+      // Private Appointment
+      _createdItem = PrivateAppointmentModel(
+        id: dateTime.millisecondsSinceEpoch,
+        type: AppointmentType.Private,
+        title: null,
+        dateTime: dateTime,
+      );
+    } else {
+      // Exercise
+      _createdItem = ExerciseModel(
+        id: dateTime.millisecondsSinceEpoch,
+        type: AppointmentType.Exercise,
+        title: null,
+        dateTime: dateTime,
+      );
+    }
 
     // save Form, this add the other values (category, place, supervisor)
     if (isSelected[0]) {
@@ -173,7 +201,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
         title: Text('Neuer Termin'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.only(top: 12),
         child: ListView(
           children: <Widget>[
             Center(
@@ -189,13 +217,13 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                     ),
-                    child: Text('Aktivität'),
+                    child: Text('Privater Termin'),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
                     ),
-                    child: Text('Privater Termin'),
+                    child: Text('Übung'),
                   )
                 ],
                 onPressed: (int index) {
@@ -214,26 +242,9 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                 isSelected: isSelected,
               ),
             ),
-            isSelected[0]
-                ? _buildTherapieForm()
-                : _buildPrivateAppointmentForm(),
-            Padding(
-              padding: const EdgeInsets.only(top: 18),
-              child: RaisedButton.icon(
-                label: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                  ),
-                  child: Text('Speichern'),
-                ),
-                icon: Icon(Icons.save),
-                color: Theme.of(context).accentColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                onPressed: _saveForm,
-              ),
-            )
+            if (isSelected[0]) _buildTherapieForm(),
+            if (isSelected[1]) _buildPrivateAppointmentForm(),
+            if (isSelected[2]) _buildExerciseForm(),
           ],
         ),
       ),
@@ -245,33 +256,28 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       key: _therapieForm,
       child: Column(
         children: <Widget>[
-          TextFormField(
-            onChanged: (val) {
-              _filterSearchResults(val);
-            },
-            controller: _therapieFieldController,
-            decoration: InputDecoration(
-                labelText: 'Art der Therapie',
-                icon: Icon(
-                  Icons.search,
-                )),
-            validator: (val) {
-              if (val.isEmpty) {
-                return 'Therapie Form muss angegeben werden';
-              }
-              return null;
-            },
-            onSaved: (val) {
-              _createdItem = AppointmentModel(
-                id: _createdItem.id,
-                category: val,
-                dateTime: _createdItem.dateTime,
-                place: _createdItem.place,
-                subject: _createdItem.subject,
-                supervisor: _createdItem.supervisor,
-                earnedPappTaler: _createdItem.earnedPappTaler,
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              onChanged: (val) {
+                _filterSearchResults(val);
+              },
+              controller: _therapieFieldController,
+              decoration: InputDecoration(
+                  labelText: 'Art der Therapie',
+                  icon: Icon(
+                    Icons.search,
+                  )),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Therapie Form muss angegeben werden';
+                }
+                return null;
+              },
+              onSaved: (val) {
+                _createdItem.title = val;
+              },
+            ),
           ),
           SizedBox(
             height: 16,
@@ -292,121 +298,131 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   .toList(),
             ),
           ),
-          FormField(
-            validator: (_) {
-              if (_selectedDate == null) {
-                return 'Datum muss ausgewählt werden';
-              }
-              return null;
-            },
-            builder: (state) => ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: _selectedDate == null
-                  ? Text(
-                      'Tag wählen...',
-                      style: TextStyle(
-                        color: Colors.grey,
+          searchItems.isNotEmpty
+              ? Container()
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    FormField(
+                      validator: (_) {
+                        if (_selectedDate == null) {
+                          return 'Datum muss ausgewählt werden';
+                        }
+                        return null;
+                      },
+                      builder: (state) => ListTile(
+                        leading: Icon(Icons.calendar_today),
+                        title: _selectedDate == null
+                            ? Text(
+                                'Tag wählen...',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : Text(
+                                DateFormat.MMMEd('de_CH').format(_selectedDate),
+                              ),
+                        subtitle: state.hasError
+                            ? Text(
+                                state.errorText,
+                                style: TextStyle(
+                                  color: Colors.redAccent[700],
+                                  fontSize: 12,
+                                ),
+                              )
+                            : Container(),
+                        trailing: RaisedButton(
+                          child: Text(
+                            'wählen',
+                          ),
+                          onPressed: _selectDate,
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
-                    )
-                  : Text(
-                      DateFormat.MMMEd('de_CH').format(_selectedDate),
                     ),
-              subtitle: state.hasError
-                  ? Text(
-                      state.errorText,
-                      style: TextStyle(
-                        color: Colors.redAccent[700],
-                        fontSize: 12,
+                    FormField(
+                      validator: (_) {
+                        if (_selectedTime == null) {
+                          return 'Tag muss ausgewählt werden';
+                        }
+                        return null;
+                      },
+                      builder: (state) => ListTile(
+                        leading: Icon(Icons.access_time),
+                        title: _selectedTime == null
+                            ? Text(
+                                'Uhrzeit wählen...',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : Text(
+                                '${_selectedTime.hour}:${_selectedTime.minute} Uhr'),
+                        subtitle: state.hasError
+                            ? Text(
+                                state.errorText,
+                                style: TextStyle(
+                                    color: Colors.redAccent[700], fontSize: 12),
+                              )
+                            : Container(),
+                        trailing: RaisedButton(
+                          child: Text(
+                            'wählen',
+                          ),
+                          onPressed: _selectTime,
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
-                    )
-                  : Container(),
-              trailing: RaisedButton(
-                child: Text(
-                  'wählen',
-                ),
-                onPressed: _selectDate,
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-          ),
-          FormField(
-            validator: (_) {
-              if (_selectedTime == null) {
-                return 'Tag muss ausgewählt werden';
-              }
-              return null;
-            },
-            builder: (state) => ListTile(
-              leading: Icon(Icons.access_time),
-              title: _selectedTime == null
-                  ? Text(
-                      'Uhrzeit wählen...',
+                    ),
+                    Divider(),
+                    Text(
+                      'optional',
                       style: TextStyle(
-                        color: Colors.grey,
+                        fontSize: 16,
+                        color: Colors.teal[700],
                       ),
-                    )
-                  : Text('${_selectedTime.hour}:${_selectedTime.minute} Uhr'),
-              subtitle: state.hasError
-                  ? Text(
-                      state.errorText,
-                      style:
-                          TextStyle(color: Colors.redAccent[700], fontSize: 12),
-                    )
-                  : Container(),
-              trailing: RaisedButton(
-                child: Text(
-                  'wählen',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Ort',
+                          icon: Icon(
+                            Icons.location_on,
+                          ),
+                        ),
+                        onSaved: (val) {
+                          _createdItem.place = val;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Therapeut',
+                          icon: Icon(
+                            Icons.person,
+                          ),
+                        ),
+                        onSaved: (val) {
+                          _createdItem = TherapyModel(
+                            id: _createdItem.id,
+                            type: _createdItem.type,
+                            title: _createdItem.title,
+                            dateTime: _createdItem.dateTime,
+                            duration: _createdItem.duration,
+                            place: _createdItem.place,
+                            subject: _createdItem.subject,
+                            earnedPappTaler: null,
+                            supervisor: val,
+                          );
+                        },
+                      ),
+                    ),
+                    _buildSaveButton(),
+                  ],
                 ),
-                onPressed: _selectTime,
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-          ),
-          Divider(),
-          Text(
-            'optional',
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Ort',
-              icon: Icon(
-                Icons.location_on,
-              ),
-            ),
-            onSaved: (val) {
-              _createdItem = AppointmentModel(
-                id: _createdItem.id,
-                category: _createdItem.category,
-                dateTime: _createdItem.dateTime,
-                place: val,
-                subject: _createdItem.subject,
-                supervisor: _createdItem.supervisor,
-                earnedPappTaler: _createdItem.earnedPappTaler,
-              );
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Therapeut',
-              icon: Icon(
-                Icons.person,
-              ),
-            ),
-            onSaved: (val) {
-              _createdItem = AppointmentModel(
-                id: _createdItem.id,
-                category: _createdItem.category,
-                dateTime: _createdItem.dateTime,
-                place: _createdItem.place,
-                subject: _createdItem.subject,
-                supervisor: val,
-                earnedPappTaler: _createdItem.earnedPappTaler,
-              );
-            },
-          ),
         ],
       ),
     );
@@ -416,17 +432,21 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     return Form(
       key: _privateAppointmentForm,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Titel',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  labelText: 'Titel des Privaten Termin',
+                  icon: Icon(Icons.title)),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Titel muss angegeben werden';
+                }
+                return null;
+              },
             ),
-            validator: (val) {
-              if (val.isEmpty) {
-                return 'Titel muss angegeben werden';
-              }
-              return null;
-            },
           ),
           SizedBox(
             height: 16,
@@ -501,7 +521,55 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               ),
             ),
           ),
+          _buildSaveButton(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildExerciseForm() {
+    return Form(
+      key: _exerciseForm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Titel der Übung',
+                icon: Icon(Icons.title),
+              ),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Titel muss angegeben werden';
+                }
+                return null;
+              },
+            ),
+          ),
+          _buildSaveButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18, left: 8, right: 8),
+      child: RaisedButton.icon(
+        label: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          child: Text('Speichern'),
+        ),
+        icon: Icon(Icons.save),
+        color: Theme.of(context).accentColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        onPressed: _saveForm,
       ),
     );
   }
