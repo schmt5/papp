@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/reward_screen.dart';
+import '../screens/teddy_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -24,7 +25,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.pets),
             title: Text('Teddy'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(TeddyScreen.routeName);
+            },
           ),
           ListTile(
             leading: Icon(Icons.cake),

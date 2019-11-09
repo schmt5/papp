@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/teddy.dart';
+
 class TeddyScreen extends StatelessWidget {
   static const routeName = '/teddy';
 
@@ -9,9 +11,13 @@ class TeddyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Teddy'),
       ),
-      body: Center(
-        child: Text('Teddy Screen'),
-      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Teddy(),
+         
+        ],
+      )
     );
   }
 }
