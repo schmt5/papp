@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/appointments.dart';
+import '../screens/appointment_detail_screen.dart';
 
 class NextAppointmentCard extends StatelessWidget {
   final String category = 'Ergotherapie';
@@ -50,11 +51,14 @@ class NextAppointmentCard extends StatelessWidget {
                                       .format(data.nextItem.dateTime) +
                                   ' Uhr',
                             ),
-                            subtitle: Text(data.nextItem.title, style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).primaryColor,
-                            ),),
+                            subtitle: Text(
+                              data.nextItem.title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
                           ),
                           // ListTile(
                           //   leading: Icon(Icons.access_time),
@@ -81,7 +85,6 @@ class NextAppointmentCard extends StatelessWidget {
                                 child: Text(
                                   'Taler sammeln',
                                   style: TextStyle(
-                              
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -90,7 +93,15 @@ class NextAppointmentCard extends StatelessWidget {
                               ),
                               OutlineButton(
                                 child: Text('Details'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                    AppointmentDetailScreen.routeName,
+                                    arguments: {
+                                      'type': data.nextItem.type,
+                                      'item': data.nextItem,
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           )

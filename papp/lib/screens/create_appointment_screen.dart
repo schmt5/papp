@@ -163,7 +163,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
         title: null,
         dateTime: dateTime,
       );
-    } else {
+    } else if (isSelected[2]) {
       // Exercise
       _createdItem = ExerciseModel(
         id: dateTime.millisecondsSinceEpoch,
@@ -171,6 +171,8 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
         title: null,
         dateTime: dateTime,
       );
+    } else {
+      print('FAIL');
     }
 
     // save Form, this add the other values (category, place, supervisor)
@@ -186,13 +188,17 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       // insert createdItem [PrivateAppointmentModel] into Database
       Provider.of<Appointments>(context, listen: false)
           .addAppointment(_createdItem);
-    } else {
+    } else if (isSelected[2]) {
       _exerciseForm.currentState.save();
 
       // insert createdItem [ExerciseModel] into Database
       Provider.of<Appointments>(context, listen: false)
           .addAppointment(_createdItem);
+    } else {
+      print('FAIL');
     }
+
+    Navigator.pop(context);
   }
 
   @override
@@ -323,7 +329,9 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                           ),
                         ),
                         onSaved: (val) {
-                          _createdItem.place = val;
+                          if (val.isNotEmpty) {
+                            _createdItem.place = val;
+                          }
                         },
                       ),
                     ),
@@ -337,17 +345,19 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                           ),
                         ),
                         onSaved: (val) {
-                          _createdItem = TherapyModel(
-                            id: _createdItem.id,
-                            type: _createdItem.type,
-                            title: _createdItem.title,
-                            dateTime: _createdItem.dateTime,
-                            duration: _createdItem.duration,
-                            place: _createdItem.place,
-                            subject: _createdItem.subject,
-                            earnedPappTaler: null,
-                            supervisor: val,
-                          );
+                          if (val.isNotEmpty) {
+                            _createdItem = TherapyModel(
+                              id: _createdItem.id,
+                              type: _createdItem.type,
+                              title: _createdItem.title,
+                              dateTime: _createdItem.dateTime,
+                              duration: _createdItem.duration,
+                              place: _createdItem.place,
+                              subject: _createdItem.subject,
+                              earnedPappTaler: null,
+                              supervisor: val,
+                            );
+                          }
                         },
                       ),
                     ),

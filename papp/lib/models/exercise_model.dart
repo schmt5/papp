@@ -24,7 +24,7 @@ class ExerciseModel implements AppointmentModel {
 
   ExerciseModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        type = AppointmentType.Therapie,
+        type = AppointmentType.Exercise,
         title = json['title'],
         dateTime = DateTime.parse(json['dateTime']),
         duration = json['duration'] == null ? null : Duration(minutes: json['duration']),

@@ -44,7 +44,7 @@ class DatabaseProvider {
           CREATE TABLE $_appointmentTable
           (
             id INTEGER PRIMARY KEY,
-            type TEXT,
+            type INTEGER,
             title TEXT,
             dateTime TEXT,
             duration INTEGER,

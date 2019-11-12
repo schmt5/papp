@@ -29,7 +29,6 @@ class TeddyCard extends StatelessWidget {
                     Text(
                       'Teddy',
                       style: TextStyle(fontSize: 18),
-                      
                     ),
                     Spacer(),
                     Container(
@@ -80,10 +79,11 @@ class TeddyCard extends StatelessWidget {
                           width:
                               constraints.maxWidth * (1 - percentOfNextLevel),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                            width: 2.0,
-                            color: Colors.amber[300],
-                          )),
+                            border: Border.all(
+                              width: 2.0,
+                              color: Colors.amber[300],
+                            ),
+                          ),
                         )
                       ],
                     );

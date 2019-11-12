@@ -24,7 +24,7 @@ class PrivateAppointmentModel implements AppointmentModel {
 
   PrivateAppointmentModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        type = AppointmentType.Therapie,
+        type = AppointmentType.Private,
         title = json['title'],
         dateTime = DateTime.parse(json['dateTime']),
         duration = json['duration'] == null ? null : Duration(minutes: json['duration']),
