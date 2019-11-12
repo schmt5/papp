@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/appointment_model.dart';
 import '../models/appointment_type.dart';
+import '../screens/appointment_detail_screen.dart';
 
 class AppointmentItem extends StatelessWidget {
-  final int id;
-  final AppointmentType type;
-  final String title;
-  final DateTime dateTime;
-  final String place;
- 
+  final AppointmentModel item;
+  // final int id;
+  // final AppointmentType type;
+  // final String title;
+  // final DateTime dateTime;
+  // final String place;
 
-  AppointmentItem({
-    @required this.id,
-    @required this.type,
-    @required this.title,
-    @required this.dateTime,
-    this.place,
-
-  });
+  AppointmentItem(this.item);
 
   bool _isToday() {
     var now = DateTime.now();
-    return dateTime.day == now.day && dateTime.month == now.month && dateTime.year == now.year;
+    return item.dateTime.day == now.day &&
+        item.dateTime.month == now.month &&
+        item.dateTime.year == now.year;
   }
 
   @override
@@ -33,23 +30,30 @@ class AppointmentItem extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: Icon(Icons.access_time),
-            title: _isToday() ? Text('Heute, um ' + DateFormat.Hm('de_CH').format(dateTime) + ' Uhr') : Text(
-              DateFormat.MMMEd('de_CH').format(dateTime) + ' um ' + DateFormat.Hm('de_CH').format(dateTime) + ' Uhr',
+            title: _isToday()
+                ? Text('Heute, um ' +
+                    DateFormat.Hm('de_CH').format(item.dateTime) +
+                    ' Uhr')
+                : Text(
+                    DateFormat.MMMEd('de_CH').format(item.dateTime) +
+                        ' um ' +
+                        DateFormat.Hm('de_CH').format(item.dateTime) +
+                        ' Uhr',
+                  ),
+            subtitle: Text(
+              item.title,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600),
             ),
-            subtitle: Text(title, style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w600
-            ),),
           ),
-      
           ButtonBar(
             children: <Widget>[
               RaisedButton(
                 child: Text(
                   'Taler sammeln',
                   style: TextStyle(
-    
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -58,7 +62,15 @@ class AppointmentItem extends StatelessWidget {
               ),
               OutlineButton(
                 child: Text('Details'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    AppointmentDetailScreen.routeName,
+                    arguments: {
+                      'type': item.type,
+                      'item': item,
+                    },
+                  );
+                },
               ),
             ],
           )

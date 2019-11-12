@@ -13,9 +13,9 @@ class PrivateAppointmentDetails extends StatelessWidget {
     return Column(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.category),
+            leading: Icon(Icons.title),
             title: Text(item.title),
-            subtitle: Text('Therapieform'),
+            subtitle: Text('Titel'),
           ),
           ListTile(
             leading: Icon(Icons.calendar_today),

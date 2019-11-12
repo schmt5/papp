@@ -14,13 +14,7 @@ class AppointmentOverviewScreen extends StatelessWidget {
         return Consumer<Appointments>(
           builder: (ctx, data, child) => ListView.separated(
             itemCount: data.upcomingItems.length,
-            itemBuilder: (ctx, i) => AppointmentItem(
-              id: data.upcomingItems[i].id,
-              type: data.upcomingItems[i].type,
-              title: data.upcomingItems[i].title,
-              dateTime: data.upcomingItems[i].dateTime,
-              place: data.upcomingItems[i].place,
-            ),
+            itemBuilder: (ctx, i) => AppointmentItem(data.upcomingItems[i]),
             separatorBuilder: (ctx, i) {
               var j = i == (data.upcomingItems.length - 1) ? i : i + 1;
               return Padding(
