@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/reward_screen.dart';
 import '../screens/teddy_screen.dart';
+import '../screens/user_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -20,7 +21,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Mein Profil'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(UserScreen.routeName);
+            },
           ),
           ListTile(
             leading: Icon(Icons.pets),

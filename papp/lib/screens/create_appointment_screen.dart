@@ -313,7 +313,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     _buildDateTimePicker(),
                     Divider(),
                     Text(
-                      'optional',
+                      'optional', textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.teal[700],
@@ -323,7 +323,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          labelText: 'Ort',
+                          labelText: 'Ort (optional)',
                           icon: Icon(
                             Icons.location_on,
                           ),
@@ -339,7 +339,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          labelText: 'Therapeut',
+                          labelText: 'Therapeut (optional)',
                           icon: Icon(
                             Icons.person,
                           ),
