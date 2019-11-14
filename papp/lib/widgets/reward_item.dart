@@ -7,6 +7,64 @@ class RewardItem extends StatelessWidget {
 
   RewardItem(this.title, this.imgUrl, this.infos);
 
+  void _showDetailModalSheet(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (ctx) {
+          return Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                color: Colors.black87,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 18,
+                ),
+                child: Text(
+                  infos,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: RaisedButton(
+                  child: Text(
+                    'Zurück',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  color: Theme.of(ctx).accentColor,
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -34,7 +92,6 @@ class RewardItem extends StatelessWidget {
                 bottom: 10,
                 left: 10,
                 child: Container(
-                 
                   color: Colors.black87,
                   padding: EdgeInsets.symmetric(
                     horizontal: 20,
@@ -67,7 +124,7 @@ class RewardItem extends StatelessWidget {
                 ),
                 OutlineButton(
                   child: Text('Details'),
-                  onPressed: () {},
+                  onPressed: () => _showDetailModalSheet(context),
                 )
               ],
             ),
