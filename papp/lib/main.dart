@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import './providers/appointments.dart';
 import './providers/database_provider.dart';
+import './providers/points.dart';
 import './models/appointment_model.dart';
 
 import './screens/home_screen.dart';
@@ -16,7 +17,6 @@ import './screens/congratulation_screen.dart';
 
 void main() async {
   await DatabaseProvider.dbProvider.db;
-
   runApp(MyApp());
 }
 
@@ -28,7 +28,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: Appointments(),
-        )
+        ),
+        ChangeNotifierProvider.value(
+          value: Points(),
+        ),
       ],
       child: MaterialApp(
         localizationsDelegates: [
@@ -54,6 +57,7 @@ class MyApp extends StatelessWidget {
         ),
         home: HomeScreen(),
         routes: {
+          HomeScreen.routeName: (ctx) => HomeScreen(),
           AppointmentDetailScreen.routeName: (ctx) => AppointmentDetailScreen(),
           TeddyScreen.routeName: (ctx) => TeddyScreen(),
           UserScreen.routeName: (ctx) => UserScreen(),

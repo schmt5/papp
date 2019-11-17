@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/points.dart';
+import '../screens/home_screen.dart';
 
 class CongratulationScreen extends StatelessWidget {
   static const routeName = '/congratulation';
@@ -20,7 +24,12 @@ class CongratulationScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          var points = Provider.of<Points>(context, listen: false);
+          points.setPappTaler(taler);
+          points.setXp(xp);
+          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        },
       ),
       body: Column(
         children: <Widget>[
@@ -86,9 +95,4 @@ class CongratulationScreen extends StatelessWidget {
       ),
     );
   }
-
-  saveReward() {
-    
-  }
-
 }

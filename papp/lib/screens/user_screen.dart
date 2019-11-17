@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/points.dart';
 import '../models/reward_model.dart';
 import '../widgets/papp_taler_card.dart';
 import '../widgets/bell_card.dart';
@@ -44,24 +46,64 @@ class UserScreen extends StatelessWidget {
             ),
           ),
           SliverFillRemaining(
-            child: Column(
-              children: <Widget>[
-                PappTalerCard(),
-                Card(
-                  margin: EdgeInsets.all(15),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.notifications,
-                        size: 30,
-                      ),
-                      title: Text('$daysLeft Tage'),
-                      subtitle: Text('bis du die Glocke läuten darfst.'),
-                    ),
-                  ),
-                ),
-              ],
+            child: FutureBuilder(
+              future: Provider.of<Points>(context, listen: false)
+                  .fetchAndSetPoints(),
+              builder: (ctx, snapshot) {
+                return Consumer<Points>(
+                  builder: (context, pointData, _) {
+                    return Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            title: Text(
+                              '${pointData.pappTaler}',
+                              style: TextStyle(
+                                fontSize: 36,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Papp-Taler',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            trailing: CircleAvatar(
+                              child: Icon(Icons.attach_money),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            title: Text(
+                              '${pointData.daysLeft}',
+                              style: TextStyle(
+                                fontSize: 36,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Tage, bist du die Glocke läuten darfst.',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            trailing: CircleAvatar(
+                              child: Icon(Icons.notifications),
+                            ),
+                          ),
+                        ),
+                        //PappTalerCard(),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
           )
         ],
