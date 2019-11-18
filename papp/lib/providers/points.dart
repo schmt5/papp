@@ -35,12 +35,18 @@ class Points with ChangeNotifier {
   }
 
   Future<void> fetchAndSetPoints() async {
-    final prefs = await SharedPreferences.getInstance();
-    _pappTaler = prefs.getInt('pappTaler') ?? 0;
-    _xp = prefs.getInt('xp') ?? 0;
-    _level = prefs.getInt('level') ?? 0;
-    _daysLeft = prefs.getInt('daysLeft') ?? 0;
-    _choosenReward = prefs.getInt('choosenReward') ?? 0;
+    if (_pappTaler == null ||
+        _xp == null ||
+        _level == null ||
+        _daysLeft == null ||
+        _choosenReward == null) {
+      final prefs = await SharedPreferences.getInstance();
+      _pappTaler = prefs.getInt('pappTaler') ?? 0;
+      _xp = prefs.getInt('xp') ?? 0;
+      _level = prefs.getInt('level') ?? 0;
+      _daysLeft = prefs.getInt('daysLeft') ?? 0;
+      _choosenReward = prefs.getInt('choosenReward') ?? 0;
+    }
   }
 
   setPappTaler(int earnedPappTaler) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 import '../providers/points.dart';
 import '../screens/home_screen.dart';
@@ -33,8 +34,17 @@ class CongratulationScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
+          Container(
+            height: 280,
+            child: FlareActor(
+              'assets/teddy.flr',
+              alignment: Alignment.center,
+              fit: BoxFit.fitWidth,
+              animation: 'successDelay',
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.only(top: 12),
             child: Text(
               'Deine Belohnung:',
               textAlign: TextAlign.center,
@@ -45,7 +55,7 @@ class CongratulationScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               title: Text(
                 '$taler',
@@ -70,7 +80,7 @@ class CongratulationScreen extends StatelessWidget {
             height: 20,
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               title: Text(
                 '$xp',
