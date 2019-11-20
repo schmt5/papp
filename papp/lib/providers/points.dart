@@ -46,15 +46,30 @@ class Points with ChangeNotifier {
   }
 
   double get percentOfNextLevel {
-    return xp / xpForNextLevel;
+    if (xp == null || level == null) {
+      return 0.2;
+    }
+    var lowerBound = (math.pow(level - 1, 1.5) * 40);
+    var upperBound = xpForNextLevel;
+    var deltaBound = upperBound - lowerBound;
+    var xpInThatLevel = xp - lowerBound;
+
+    return xpInThatLevel / deltaBound;
   }
 
-  // private function
   bool _isNextLevel() {
     var treshhold = xpForNextLevel;
     return xp >= treshhold;
   }
 
+  bool gonnaBeNextLevel(int newXp) {
+    int totalXp;
+    if (xp == null) {
+      return false;
+    }
+    totalXp = newXp + xp;
+    return totalXp >= xpForNextLevel;
+  }
 
   // shared Preferences
   Future<void> fetchAndSetPoints() async {
