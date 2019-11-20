@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/points.dart';
 import './dashbord_screen.dart';
 import './appointment_overview_screen.dart';
-
 import '../screens/create_appointment_screen.dart';
 import '../widgets/app_drawer.dart';
 
@@ -22,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_handleTabIndex);
+    Provider.of<Points>(context, listen: false).fetchAndSetPoints();
+
   }
 
   @override

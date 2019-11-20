@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/points.dart';
 import '../screens/user_screen.dart';
 
 class BellCard extends StatelessWidget {
-  final int daysLeft = 64;
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,7 +20,11 @@ class BellCard extends StatelessWidget {
               Icons.notifications,
               size: 30,
             ),
-            title: Text('$daysLeft Tage'),
+            title: Consumer<Points>(
+              builder: (context, pointData, _) {
+                return Text('${pointData.daysLeft} Tage');
+              },
+            ),
             subtitle: Text('bis du die Glocke läuten darfst.'),
           ),
         ),
