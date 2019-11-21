@@ -20,7 +20,7 @@ class _TeddyState extends State<Teddy> {
         });
       },
       child: Container(
-        height: 400,
+        height: 320,
         child: FlareActor(
           _flareFile,
           alignment: Alignment.center,
