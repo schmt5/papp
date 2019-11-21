@@ -129,4 +129,22 @@ class Points with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  setChoosenReward(int usersChoice) async {
+    if (_choosenReward == null) {
+      await fetchAndSetPoints();
+    }
+    // optimistic update
+    var previousChoice = _choosenReward;
+    _choosenReward = usersChoice;
+    notifyListeners();
+
+    try {
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setInt('choosenReward', _choosenReward);
+    } catch (err) {
+      _choosenReward = previousChoice;
+      notifyListeners();
+    }
+  }
 }

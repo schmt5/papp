@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/points.dart';
 import '../models/reward_model.dart';
+import '../models/reward_type.dart';
 import '../widgets/papp_taler_card.dart';
 import '../widgets/bell_card.dart';
 
@@ -12,11 +13,11 @@ class UserScreen extends StatelessWidget {
   final int selectedReward = 1;
   final int daysLeft = 64;
 
-  var rewards = [
-    RewardModel('Alpamare', 'assets/images/alpamare.jpg', 'nice'),
-    RewardModel('Zoo Zürich', 'assets/images/zoo_zurich.jpeg', 'kuul'),
-    RewardModel('Technorama', 'assets/images/technorama.jpg', 'kuul'),
-    RewardModel('Europapark', 'assets/images/europapark.jpg',
+   var rewards = [
+    RewardModel('Alpamare', RewardType.Alpamare, 'assets/images/alpamare.jpg', 'nice'),
+    RewardModel('Zoo Zürich', RewardType.ZooZurich, 'assets/images/zoo_zurich.jpeg', 'kuul'),
+    RewardModel('Technorama', RewardType.Technorama, 'assets/images/technorama.jpg', 'kuul'),
+    RewardModel('Europapark', RewardType.Europapark, 'assets/images/europapark.jpg',
         'Europapark ist ein Erlebnispark in Deutschland. Dort kannst du fein essen, Shows anschauen und Achterbahnfahren'),
   ];
 
