@@ -143,6 +143,12 @@ class RewardItem extends StatelessWidget {
                                 color: Theme.of(context).accentColor,
                                 onPressed: () {
                                   pointData.setChoosenReward(type.index);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                      'Deine Wahl wurde gespeichert',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ));
                                 },
                               ),
                         OutlineButton(
