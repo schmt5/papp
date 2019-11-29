@@ -83,7 +83,7 @@ class Points with ChangeNotifier {
       _xp = prefs.getInt('xp') ?? 1;
       _level = prefs.getInt('level') ?? 1;
       _daysLeft = prefs.getInt('daysLeft') ?? 64;
-      _choosenReward = prefs.getInt('choosenReward') ?? 1;
+      _choosenReward = prefs.getInt('choosenReward');
     }
   }
 

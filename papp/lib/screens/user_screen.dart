@@ -52,10 +52,12 @@ class UserScreen extends StatelessWidget {
                     ),
                     background: Consumer<Points>(
                       builder: (context, pointData, _) {
-                        return Image.asset(
-                          rewards[pointData.choosenReward].imgUrl,
-                          fit: BoxFit.cover,
-                        );
+                        return pointData.choosenReward != null
+                            ? Image.asset(
+                                rewards[pointData.choosenReward].imgUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : Container();
                       },
                     ),
                   ),
