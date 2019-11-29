@@ -14,6 +14,7 @@ import './screens/user_screen.dart';
 import './screens/reward_screen.dart';
 import './screens/create_appointment_screen.dart';
 import './screens/congratulation_screen.dart';
+import './screens/onboarding_screen.dart';
 
 void main() async {
   await DatabaseProvider.dbProvider.db;
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
           RewardScreen.routeName: (ctx) => RewardScreen(),
           CreateAppointmentScreen.routeName: (ctx) => CreateAppointmentScreen(),
           CongratulationScreen.routeName: (ctx) => CongratulationScreen(),
+          OnboardingScreen.routeName: (ctx) => OnboardingScreen(),
         },
       ),
     );

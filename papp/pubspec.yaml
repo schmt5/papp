@@ -56,6 +56,9 @@ flutter:
    - assets/images/technorama.jpg
    - assets/images/zoo_zurich.jpeg
    - assets/teddy.flr
+   - assets/images/swipe_left.png
+   - assets/images/spitzbergen_map.png
+   - assets/images/teddy_footprint.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

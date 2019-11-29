@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/reward_screen.dart';
 import '../screens/teddy_screen.dart';
 import '../screens/user_screen.dart';
+import '../screens/onboarding_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -49,6 +50,12 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('Datenschutzerklärung'),
             onTap: () {},
+          ),
+          ListTile(
+            title: Text('Onboarding'),
+            onTap: () {
+              Navigator.of(context).pushNamed(OnboardingScreen.routeName);
+            },
           ),
         ],
       ),
