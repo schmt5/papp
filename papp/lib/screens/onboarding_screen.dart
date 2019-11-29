@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/teddy.dart';
+
 class OnboardingScreen extends StatefulWidget {
   static const routeName = '/onboarding';
 
@@ -78,16 +80,22 @@ final List<Widget> introWidgets = [
     color: Colors.teal[800],
     child: Column(
       children: <Widget>[
-        Container(
-          height: 350,
-          width: double.infinity,
-          color: Colors.grey,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            //color: Colors.cyan[800],
+            elevation: 4,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Teddy(),
+            ),
+          ),
         ),
         SizedBox(
           height: 30,
         ),
         Text(
-          'Hey',
+          'Hey 👋',
           style: TextStyle(
             color: Colors.white,
             fontSize: 36,
