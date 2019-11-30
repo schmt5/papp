@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/onboarding.dart';
 import '../widgets/teddy.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -66,6 +68,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ],
+              ),
+              Visibility(
+                visible: currentPageValue == introWidgets.length - 1,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: FloatingActionButton.extended(
+                      label: Text(
+                        'Los gehts',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () {
+                        Provider.of<Onboarding>(context).setIsOnboarded(true);
+                      },
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -354,24 +376,6 @@ final List<Widget> introWidgets = [
               color: Colors.white,
             ),
             textAlign: TextAlign.left,
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Center(
-          child: RaisedButton(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Los gehts',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            onPressed: () {},
-            color: Colors.amber,
           ),
         ),
       ],

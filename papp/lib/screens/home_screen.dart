@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_handleTabIndex);
     Provider.of<Points>(context, listen: false).fetchAndSetPoints();
-
   }
 
   @override

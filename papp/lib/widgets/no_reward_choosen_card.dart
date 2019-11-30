@@ -13,23 +13,31 @@ class NoRewardChoosenCard extends StatelessWidget {
     return isRewardChoosen
         ? Container()
         : Card(
-            margin: EdgeInsets.all(15),
             color: Colors.amber,
+            margin: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.cake),
-                  title: Text('Noch keine Belohnung ausgwählt'),
+                Container(
+                  color: Colors.amber,
+                  child: ListTile(
+                    leading: Icon(Icons.cake),
+                    title: Text(
+                      'Keine Belohnung ausgwählt',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: OutlineButton(
-                      borderSide: BorderSide(
-                        color: Colors.teal[800],
-                        width: 2,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
+                      color: Colors.white,
                       child: Text(
                         'Belohnung auswählen',
                         style: TextStyle(
