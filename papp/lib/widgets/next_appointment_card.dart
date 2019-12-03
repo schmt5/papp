@@ -2,9 +2,12 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 import '../providers/appointments.dart';
 import '../screens/appointment_detail_screen.dart';
+import '../models/appointment_type.dart';
+import '../screens/congratulation_screen.dart';
 
 class NextAppointmentCard extends StatelessWidget {
   final String category = 'Ergotherapie';
@@ -81,16 +84,18 @@ class NextAppointmentCard extends StatelessWidget {
                           // ),
                           ButtonBar(
                             children: <Widget>[
-                              RaisedButton(
-                                child: Text(
-                                  'Taler sammeln',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                onPressed: () {},
-                                color: Theme.of(context).accentColor,
-                              ),
+                              data.nextItem.type == AppointmentType.Private
+                                  ? Container()
+                                  : RaisedButton(
+                                      child: Text(
+                                        'Papp-Taler sammeln',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      onPressed: () => _scan(context),
+                                      color: Theme.of(context).accentColor,
+                                    ),
                               OutlineButton(
                                 child: Text('Details'),
                                 onPressed: () {
@@ -113,5 +118,72 @@ class NextAppointmentCard extends StatelessWidget {
         );
       },
     );
+  }
+
+    _scan(BuildContext ctx) async {
+    const int securityKey = 199722369;
+    var scannedCode = await BarcodeScanner.scan();
+
+    try {
+      int key = int.parse(scannedCode.split('.').first);
+      int taler = int.parse(scannedCode.split('.').last);
+
+      if (key == securityKey && taler >= 0 && taler <= 3) {
+        Navigator.of(ctx).pushNamed(
+          CongratulationScreen.routeName,
+          arguments: taler,
+        );
+      } else {
+        return showDialog(
+          context: ctx,
+          builder: (ctx) => AlertDialog(
+            title: Text(
+              'Falscher QR Code',
+            ),
+            content: Center(
+              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+            ),
+            actions: <Widget>[
+              RaisedButton(
+                child: Text(
+                  'Verstanden',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              )
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      return showDialog(
+        context: ctx,
+        builder: (ctx) => AlertDialog(
+          title: Text('Falscher QR Code'),
+          content: Center(
+            child: Container(
+              height: 100,
+              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+            ),
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text(
+                'Verstanden',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
   }
 }

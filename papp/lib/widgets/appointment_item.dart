@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 import '../models/appointment_model.dart';
 import '../models/appointment_type.dart';
 import '../screens/appointment_detail_screen.dart';
+import '../screens/congratulation_screen.dart';
 
 class AppointmentItem extends StatelessWidget {
   final AppointmentModel item;
-  // final int id;
-  // final AppointmentType type;
-  // final String title;
-  // final DateTime dateTime;
-  // final String place;
+  final categoryList = ['Therapy', 'Privat', 'Übung'];
 
   AppointmentItem(this.item);
 
@@ -25,9 +23,36 @@ class AppointmentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8),
+      elevation: 3,
+      margin: EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 150,
+              decoration: BoxDecoration(
+                color: Colors.teal[100],
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(3),
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    categoryList[item.type.index],
+                    style: TextStyle(
+                      //color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           ListTile(
             leading: Icon(Icons.access_time),
             title: _isToday()
@@ -50,16 +75,18 @@ class AppointmentItem extends StatelessWidget {
           ),
           ButtonBar(
             children: <Widget>[
-              RaisedButton(
-                child: Text(
-                  'Taler sammeln',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {},
-                color: Theme.of(context).accentColor,
-              ),
+              item.type == AppointmentType.Private
+                  ? Container()
+                  : RaisedButton(
+                      child: Text(
+                        'Papp-Taler sammeln',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () => _scan(context),
+                      color: Theme.of(context).accentColor,
+                    ),
               OutlineButton(
                 child: Text('Details'),
                 onPressed: () {
@@ -77,5 +104,72 @@ class AppointmentItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _scan(BuildContext ctx) async {
+    const int securityKey = 199722369;
+    var scannedCode = await BarcodeScanner.scan();
+
+    try {
+      int key = int.parse(scannedCode.split('.').first);
+      int taler = int.parse(scannedCode.split('.').last);
+
+      if (key == securityKey && taler >= 0 && taler <= 3) {
+        Navigator.of(ctx).pushNamed(
+          CongratulationScreen.routeName,
+          arguments: taler,
+        );
+      } else {
+        return showDialog(
+          context: ctx,
+          builder: (ctx) => AlertDialog(
+            title: Text(
+              'Falscher QR Code',
+            ),
+            content: Center(
+              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+            ),
+            actions: <Widget>[
+              RaisedButton(
+                child: Text(
+                  'Verstanden',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              )
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      return showDialog(
+        context: ctx,
+        builder: (ctx) => AlertDialog(
+          title: Text('Falscher QR Code'),
+          content: Center(
+            child: Container(
+              height: 100,
+              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+            ),
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text(
+                'Verstanden',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
   }
 }

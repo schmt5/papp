@@ -351,7 +351,7 @@ final List<Widget> introWidgets = [
             horizontal: 14,
           ),
           child: Text(
-            'Vor dem Schnee-Sturm hat ihn seine Mutter meistens auf dem Rücken getagen. Nun muss Teddy den ganzen Weg selbst nach Hause wandern. Teddy ist aber für solch eine grosse Wanderung noch nicht fit genug.',
+            'Vor dem Schnee-Sturm hat ihn seine Mutter meistens auf dem Rücken getragen. Nun muss Teddy den ganzen Weg selbst nach Hause wandern. Teddy ist aber für solch eine grosse Wanderung noch nicht fit genug.',
             style: TextStyle(
               fontSize: 20,
               //fontStyle: FontStyle.italic,
