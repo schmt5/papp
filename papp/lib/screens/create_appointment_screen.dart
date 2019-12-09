@@ -249,6 +249,9 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                 isSelected: isSelected,
               ),
             ),
+            SizedBox(
+              height: 12,
+            ),
             if (isSelected[0]) _buildTherapieForm(),
             if (isSelected[1]) _buildPrivateAppointmentForm(),
             if (isSelected[2]) _buildExerciseForm(),

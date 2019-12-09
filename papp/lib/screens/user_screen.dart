@@ -67,12 +67,14 @@ class UserScreen extends StatelessWidget {
                     builder: (context, pointData, _) {
                       return Column(
                         children: <Widget>[
-                          SizedBox(height: 12,),
+                          SizedBox(
+                            height: 12,
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ListTile(
                               title: Text(
-                                '${pointData.pappTaler}',
+                                '${pointData.pappTaler} von 50',
                                 style: TextStyle(
                                   fontSize: 36,
                                 ),
@@ -86,8 +88,8 @@ class UserScreen extends StatelessWidget {
                                 ),
                               ),
                               trailing: Container(
-                                height: 80,
-                                width: 80,
+                                height: 75,
+                                width: 75,
                                 child: Image.asset(
                                   'assets/images/papp_taler.png',
                                   fit: BoxFit.contain,
@@ -118,6 +120,41 @@ class UserScreen extends StatelessWidget {
                             ),
                           ),
                           //PappTalerCard(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 18, left: 8, right: 8),
+                            child: RaisedButton.icon(
+                              label: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                child: pointData.xp < 50
+                                    ? Text(
+                                        'Papp-Taler einlösen (Dir fehlen noch ${50 - pointData.pappTaler} Papp-Taler)',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Papp-Taler einlösen',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                              ),
+                              icon: Icon(
+                                Icons.cake,
+                                color: Colors.black,
+                              ),
+                              color: Theme.of(context).accentColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              onPressed:
+                                  pointData.pappTaler < 50 ? null : () {},
+                            ),
+                          ),
                         ],
                       );
                     },
