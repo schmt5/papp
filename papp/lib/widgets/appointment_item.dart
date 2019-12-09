@@ -88,7 +88,13 @@ class AppointmentItem extends StatelessWidget {
                       color: Theme.of(context).accentColor,
                     ),
               OutlineButton(
-                child: Text('Details'),
+                borderSide: BorderSide(width: 1.5),
+                child: Text(
+                  'Details',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     AppointmentDetailScreen.routeName,

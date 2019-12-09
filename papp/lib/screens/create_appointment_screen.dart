@@ -313,7 +313,8 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     _buildDateTimePicker(),
                     Divider(),
                     Text(
-                      'optional', textAlign: TextAlign.center,
+                      'optional',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.teal[700],
@@ -468,6 +469,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               return null;
             },
             builder: (state) => ListTile(
+              onTap: _selectDate,
               leading: Icon(Icons.calendar_today),
               title: _selectedDate == null
                   ? Text(
@@ -503,6 +505,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
               return null;
             },
             builder: (state) => ListTile(
+              onTap: _selectTime,
               leading: Icon(Icons.access_time),
               title: _selectedTime == null
                   ? Text(
