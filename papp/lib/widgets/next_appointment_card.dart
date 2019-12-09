@@ -24,6 +24,7 @@ class NextAppointmentCard extends StatelessWidget {
             return data.nextItem == null
                 ? Container()
                 : Card(
+                    elevation: 3,
                     margin: EdgeInsets.all(15),
                     child: InkWell(
                       onTap: () {},
@@ -120,7 +121,7 @@ class NextAppointmentCard extends StatelessWidget {
     );
   }
 
-    _scan(BuildContext ctx) async {
+  _scan(BuildContext ctx) async {
     const int securityKey = 199722369;
     var scannedCode = await BarcodeScanner.scan();
 

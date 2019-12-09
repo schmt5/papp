@@ -78,7 +78,7 @@ class TeddyScreen extends StatelessWidget {
                                 //   ),
                                 // ),
                                 trailing: CircleAvatar(
-                                  child: Text('XP'),
+                                  child: Text('EP'),
                                 ),
                               ),
                             ),

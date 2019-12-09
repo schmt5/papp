@@ -22,7 +22,7 @@ class NoRewardChoosenCard extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.cake),
                     title: Text(
-                      'Wähle deine Belohnung aus',
+                      'Wähle deine Belohnung aus.',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),

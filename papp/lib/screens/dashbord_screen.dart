@@ -6,6 +6,7 @@ import '../widgets/teddy_card.dart';
 import '../widgets/bell_card.dart';
 import '../widgets/next_appointment_card.dart';
 import '../widgets/no_reward_choosen_card.dart';
+import '../widgets/papp_taler_card.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -17,7 +18,8 @@ class DashboardScreen extends StatelessWidget {
           children: <Widget>[
             NoRewardChoosenCard(),
             TeddyCard(),
-            BellCard(),
+            PappTalerCard(),
+            //BellCard(),
             NextAppointmentCard(),
           ],
         );

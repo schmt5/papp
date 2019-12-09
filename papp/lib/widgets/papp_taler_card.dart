@@ -1,47 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/points.dart';
+import '../screens/user_screen.dart';
 
 class PappTalerCard extends StatelessWidget {
-  final int pappTaler = 5;
-  final double percentOfReward = 0.1;
-
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
       margin: EdgeInsets.all(15),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        child: Column(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text('$pappTaler Papp Taler'),
-            ),
-            ListTile(
-              title: LayoutBuilder(
-                builder: (ctx, constraints) {
-                  return Row(
-                    children: <Widget>[
-                      Container(
-                        height: 20,
-                        width: constraints.maxWidth * percentOfReward,
-                        color: Colors.amber[300],
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(UserScreen.routeName);
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Container(
+                  height: 60,
+                  width: 60,
+                  child: Image.asset(
+                    'assets/images/papp_taler.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                title: Consumer<Points>(
+                  builder: (ctx, pointData, _) {
+                    return Text(
+                      '${pointData.pappTaler} Papp Taler',
+                      style: TextStyle(
+                        fontSize: 18,
                       ),
-                      Container(
-                        height: 20,
-                        width: constraints.maxWidth * (1 - percentOfReward),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2.0,
-                            color: Colors.amber[300]
-                          )
-                        ),
-                      )
-                    ],
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -12,6 +12,7 @@ class TeddyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
       margin: EdgeInsets.all(15),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -35,27 +36,32 @@ class TeddyCard extends StatelessWidget {
                           style: TextStyle(fontSize: 18),
                         ),
                         Spacer(),
-                        Container(
+                        CircleAvatar(
                           child: Text(
-                            'lvl: ${pointData.level}',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                            '${pointData.level}',
+                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                width: 2,
-                                color: Theme.of(context).primaryColor,
-                              )),
                         ),
+                        // Container(
+                        //   child: Text(
+                        //     'lvl: ${pointData.level}',
+                        //     style: TextStyle(
+                        //       fontSize: 18,
+                        //     ),
+                        //   ),
+                        //   padding:
+                        //       EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //       border: Border.all(
+                        //         width: 2,
+                        //         color: Theme.of(context).primaryColor,
+                        //       )),
+                        // ),
                       ],
                     ),
                   ),
                   ListTile(
-                    subtitle: Text('${pointData.xp} Erfahrungspunkte'),
                     title: LayoutBuilder(
                       builder: (ctx, constraints) {
                         return Row(

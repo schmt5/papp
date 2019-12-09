@@ -67,6 +67,7 @@ class UserScreen extends StatelessWidget {
                     builder: (context, pointData, _) {
                       return Column(
                         children: <Widget>[
+                          SizedBox(height: 12,),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ListTile(
@@ -84,8 +85,13 @@ class UserScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              trailing: CircleAvatar(
-                                child: Icon(Icons.attach_money),
+                              trailing: Container(
+                                height: 80,
+                                width: 80,
+                                child: Image.asset(
+                                  'assets/images/papp_taler.png',
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
                           ),
