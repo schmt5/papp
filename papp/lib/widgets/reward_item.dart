@@ -123,8 +123,28 @@ class RewardItem extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        top: 16,
+                      ),
+                      child: Text(
+                        'Preis: 50 Papp-Taler',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.only(
+                      right: 16,
+                      bottom: 16,
+                    ),
                     child: ButtonBar(
                       children: <Widget>[
                         type.index == pointData.choosenReward

@@ -14,7 +14,7 @@ class NoRewardChoosenCard extends StatelessWidget {
         ? Container()
         : Card(
             color: Colors.amber,
-            margin: EdgeInsets.all(15),
+            margin: EdgeInsets.all(16),
             child: Column(
               children: <Widget>[
                 Container(
@@ -22,7 +22,7 @@ class NoRewardChoosenCard extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.cake),
                     title: Text(
-                      'Keine Belohnung ausgwählt',
+                      'Wähle deine Belohnung aus',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
