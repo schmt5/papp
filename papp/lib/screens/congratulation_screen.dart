@@ -74,8 +74,13 @@ class CongratulationScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                trailing: CircleAvatar(
-                  child: Icon(Icons.attach_money),
+                trailing: Container(
+                  height: 60,
+                  width: 60,
+                  child: Image.asset(
+                    'assets/images/papp_taler.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -100,7 +105,7 @@ class CongratulationScreen extends StatelessWidget {
                   ),
                 ),
                 trailing: CircleAvatar(
-                  child: Text('XP'),
+                  child: Text('EP'),
                 ),
               ),
             ),

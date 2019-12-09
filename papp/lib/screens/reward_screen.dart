@@ -62,6 +62,7 @@ class RewardScreen extends StatelessWidget {
                           'In deinen Therapien kannst du Papp-Taler sammeln. Die Papp-Taler kannst du gegen eine Belohnung eintauschen.',
                           style: TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -73,6 +74,7 @@ class RewardScreen extends StatelessWidget {
                             'Wähle jetzt deine Belohnung aus.',
                             style: TextStyle(
                               fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
