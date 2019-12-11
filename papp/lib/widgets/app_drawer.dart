@@ -42,17 +42,17 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed(RewardScreen.routeName);
             },
           ),
-          ListTile(
-            leading: Icon(Icons.trending_up),
-            title: Text('Dein Fortschritt'),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text('Datenschutzerklärung'),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.trending_up),
+          //   title: Text('Dein Fortschritt'),
+          //   onTap: () {},
+          // ),
+          // Divider(),
+          // ListTile(
+          //   leading: Icon(Icons.info),
+          //   title: Text('Datenschutzerklärung'),
+          //   onTap: () {},
+          // ),
           ListTile(
             title: Text('Onboarding'),
             onTap: () {

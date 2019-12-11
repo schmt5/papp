@@ -9,7 +9,7 @@ import '../screens/congratulation_screen.dart';
 
 class AppointmentItem extends StatelessWidget {
   final AppointmentModel item;
-  final categoryList = ['Therapy', 'Privat', 'Übung'];
+  final categoryList = ['Therapie', 'Privat', 'Übung'];
 
   AppointmentItem(this.item);
 

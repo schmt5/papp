@@ -368,7 +368,7 @@ final List<Widget> introWidgets = [
             horizontal: 12,
           ),
           child: Text(
-            'Du kannst Teddy helfen! \nSammle Erfahrungspunkte und erhöhe das Level von Teddy. So machst du ihn fit für die Wanderung.',
+            'Du kannst Teddy helfen! \nIn deinen Therapien kannst du Papp-Taler und Erfahrungs-Punkte sammeln. Die Papp-Taler kannst du gegen eine Belohnung eintauschen. Mit den Erfahrungs-Punkten erhöhst du das Level von Teddy. So machst du ihn fit für die Wanderung.',
             style: TextStyle(
               fontSize: 20,
               //fontStyle: FontStyle.italic,

@@ -62,12 +62,12 @@ class _HomeScreenState extends State<HomeScreen>
       floatingActionButton: _buildFab(),
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Papp'),
         bottom: TabBar(
           controller: _tabController,
           tabs: <Widget>[
             Tab(
-              text: 'Dashboard',
+              text: 'Übersicht',
             ),
             Tab(
               text: 'Termine',
