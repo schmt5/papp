@@ -8,6 +8,8 @@ import './appointment_overview_screen.dart';
 import '../screens/create_appointment_screen.dart';
 import '../widgets/app_drawer.dart';
 import './create_therapy_screen.dart';
+import './create_exercise_screen.dart';
+import './create_private_appointment_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
@@ -49,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen>
         animatedIconTheme: IconThemeData(size: 36),
         children: [
           SpeedDialChild(
-            
             backgroundColor: Colors.blue,
             child: Icon(Icons.category),
             label: 'Therapie',
@@ -61,17 +62,20 @@ class _HomeScreenState extends State<HomeScreen>
             backgroundColor: Colors.green,
             child: Icon(Icons.accessibility_new),
             label: 'Übung',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(CreateExerciseScreen.routeName);
+            },
           ),
           SpeedDialChild(
-            
             backgroundColor: Colors.orange,
             child: Icon(
               Icons.adjust,
-             
             ),
             label: 'Privater Termin',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(CreatePrivateAppointmentScreen.routeName);
+            },
           )
         ],
       ),
