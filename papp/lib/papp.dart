@@ -17,6 +17,7 @@ import './screens/reward_screen.dart';
 import './screens/create_appointment_screen.dart';
 import './screens/congratulation_screen.dart';
 import './screens/onboarding_screen.dart';
+import './screens/create_therapy_screen.dart';
 
 class Papp extends StatelessWidget {
   @override
@@ -63,6 +64,7 @@ class Papp extends StatelessWidget {
                     CreateAppointmentScreen(),
                 CongratulationScreen.routeName: (ctx) => CongratulationScreen(),
                 OnboardingScreen.routeName: (ctx) => OnboardingScreen(),
+                CreateTherapyScreen.routeName: (ctx) => CreateTherapyScreen(),
               },
             ),
           );

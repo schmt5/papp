@@ -13,25 +13,77 @@ class AppointmentOverviewScreen extends StatelessWidget {
       builder: (ctx, snapshot) {
         return Consumer<Appointments>(
           builder: (ctx, data, child) => data.upcomingItems.length == 0
-              ? Center(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 120,
-                      ),
-                      Icon(
-                        Icons.event_busy,
-                        size: 72,
-                      ),
-                      Text(
-                        'Keine Termine',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+              ? Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 120,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Icon(
+                            Icons.event_busy,
+                            size: 72,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          'Keine Termine',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 36,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(
+                            'Drücke auf das',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          '+',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(
+                            'um einen neuen Termin zu erfassen',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 )
               : ListView.separated(
                   itemCount: data.upcomingItems.length,

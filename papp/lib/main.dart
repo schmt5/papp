@@ -10,6 +10,7 @@ import './providers/onboarding.dart';
 
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await DatabaseProvider.dbProvider.db;
   runApp(MyApp());
 }

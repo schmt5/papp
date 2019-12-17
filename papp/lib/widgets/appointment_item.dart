@@ -22,92 +22,107 @@ class AppointmentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: EdgeInsets.all(12),
-      child: Column(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 150,
-              decoration: BoxDecoration(
-                color: Colors.teal[100],
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(3),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          AppointmentDetailScreen.routeName,
+          arguments: {
+            'type': item.type,
+            'item': item,
+          },
+        );
+      },
+      child: Card(
+        elevation: 3,
+        margin: EdgeInsets.all(12),
+        child: Column(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                width: 150,
+                decoration: BoxDecoration(
+                  color: Colors.teal[100],
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(3),
+                  ),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                    ),
+                    child: Text(
+                      categoryList[item.type.index],
+                      style: TextStyle(
+                        //color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
+            ),
+            ListTile(
+              leading: Icon(Icons.access_time),
+              title: _isToday()
+                  ? Text('Heute, um ' +
+                      DateFormat.Hm('de_CH').format(item.dateTime) +
+                      ' Uhr')
+                  : Text(
+                      DateFormat.MMMEd('de_CH').format(item.dateTime) +
+                          ' um ' +
+                          DateFormat.Hm('de_CH').format(item.dateTime) +
+                          ' Uhr',
+                    ),
+              subtitle: Text(
+                item.title,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            ButtonBar(
+              children: <Widget>[
+                item.type == AppointmentType.Private
+                    ? Container()
+                    : RaisedButton(
+                        child: Text(
+                          'Papp-Taler sammeln',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        onPressed: () => _scan(context),
+                        color: Theme.of(context).accentColor,
+                      ),
+                OutlineButton(
+                  borderSide: BorderSide(
+                    width: 1.5,
+                    color: Colors.black,
                   ),
                   child: Text(
-                    categoryList[item.type.index],
+                    'Details',
                     style: TextStyle(
-                      //color: Colors.white,
                       fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
                   ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      AppointmentDetailScreen.routeName,
+                      arguments: {
+                        'type': item.type,
+                        'item': item,
+                      },
+                    );
+                  },
                 ),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.access_time),
-            title: _isToday()
-                ? Text('Heute, um ' +
-                    DateFormat.Hm('de_CH').format(item.dateTime) +
-                    ' Uhr')
-                : Text(
-                    DateFormat.MMMEd('de_CH').format(item.dateTime) +
-                        ' um ' +
-                        DateFormat.Hm('de_CH').format(item.dateTime) +
-                        ' Uhr',
-                  ),
-            subtitle: Text(
-              item.title,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          ButtonBar(
-            children: <Widget>[
-              item.type == AppointmentType.Private
-                  ? Container()
-                  : RaisedButton(
-                      child: Text(
-                        'Papp-Taler sammeln',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () => _scan(context),
-                      color: Theme.of(context).accentColor,
-                    ),
-              OutlineButton(
-                borderSide: BorderSide(width: 1.5),
-                child: Text(
-                  'Details',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    AppointmentDetailScreen.routeName,
-                    arguments: {
-                      'type': item.type,
-                      'item': item,
-                    },
-                  );
-                },
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -98,7 +98,17 @@ class NextAppointmentCard extends StatelessWidget {
                                       color: Theme.of(context).accentColor,
                                     ),
                               OutlineButton(
-                                child: Text('Details'),
+                                borderSide: BorderSide(
+                                  width: 1.5,
+                                  color: Colors.black,
+                                ),
+                                child: Text(
+                                  'Details',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pushNamed(
                                     AppointmentDetailScreen.routeName,

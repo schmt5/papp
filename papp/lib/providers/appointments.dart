@@ -7,7 +7,7 @@ class Appointments with ChangeNotifier {
   List<AppointmentModel> _items = [];
 
   List<AppointmentModel> get items {
-    return [..._items];
+    return [..._items]; // return just a copy of the _items
   }
 
   List<AppointmentModel> get upcomingItems {
