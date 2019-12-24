@@ -51,25 +51,32 @@ class _HomeScreenState extends State<HomeScreen>
         animatedIconTheme: IconThemeData(size: 36),
         children: [
           SpeedDialChild(
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.category),
+            backgroundColor: Colors.lightGreen[800],
+            child: Icon(
+              Icons.category,
+              color: Colors.white,
+            ),
             label: 'Therapie',
             onTap: () {
               Navigator.of(context).pushNamed(CreateTherapyScreen.routeName);
             },
           ),
           SpeedDialChild(
-            backgroundColor: Colors.green,
-            child: Icon(Icons.accessibility_new),
+            backgroundColor: Colors.indigo[800],
+            child: Icon(
+              Icons.accessibility_new,
+              color: Colors.white,
+            ),
             label: 'Übung',
             onTap: () {
               Navigator.of(context).pushNamed(CreateExerciseScreen.routeName);
             },
           ),
           SpeedDialChild(
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.pink[800],
             child: Icon(
               Icons.adjust,
+              color: Colors.white,
             ),
             label: 'Privater Termin',
             onTap: () {

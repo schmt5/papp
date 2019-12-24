@@ -109,12 +109,13 @@ final List<Widget> introWidgets = [
             elevation: 4,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
+              height: 260,
               child: Teddy(),
             ),
           ),
         ),
         SizedBox(
-          height: 30,
+          height: 15,
         ),
         Text(
           'Hey 👋',
@@ -228,7 +229,7 @@ final List<Widget> introWidgets = [
     child: Column(
       children: <Widget>[
         SizedBox(
-          height: 75,
+          height: 25,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -344,7 +345,7 @@ final List<Widget> introWidgets = [
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-          height: 75,
+          height: 25,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(

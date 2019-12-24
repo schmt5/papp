@@ -61,6 +61,7 @@ flutter:
    - assets/images/spitzbergen_map.png
    - assets/images/teddy_footprint.png
    - assets/images/papp_taler.png
+   - assets/images/termin_erfassen.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

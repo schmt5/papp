@@ -10,6 +10,11 @@ import '../screens/congratulation_screen.dart';
 class AppointmentItem extends StatelessWidget {
   final AppointmentModel item;
   final categoryList = ['Therapie', 'Privat', 'Übung'];
+  final colorList = [
+    Colors.lightGreen[800],
+    Colors.pink[800],
+    Colors.indigo[800],
+  ];
 
   AppointmentItem(this.item);
 
@@ -42,7 +47,7 @@ class AppointmentItem extends StatelessWidget {
               child: Container(
                 width: 150,
                 decoration: BoxDecoration(
-                  color: Colors.teal[100],
+                  color: colorList[item.type.index],
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(3),
                   ),
@@ -55,7 +60,7 @@ class AppointmentItem extends StatelessWidget {
                     child: Text(
                       categoryList[item.type.index],
                       style: TextStyle(
-                        //color: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

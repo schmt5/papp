@@ -44,10 +44,13 @@ class UserScreen extends StatelessWidget {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Container(
                       color: Theme.of(context).primaryColor.withOpacity(0.7),
-                      width: 120,
-                      child: Text(
-                        'Mein Profil',
-                        textAlign: TextAlign.center,
+                      
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'Mein Profil',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     background: Consumer<Points>(
@@ -135,6 +138,7 @@ class UserScreen extends StatelessWidget {
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                     : Text(
                                         'Papp-Taler einlösen',

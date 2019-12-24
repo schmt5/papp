@@ -14,18 +14,16 @@ class AppointmentOverviewScreen extends StatelessWidget {
         return Consumer<Appointments>(
           builder: (ctx, data, child) => data.upcomingItems.length == 0
               ? Column(
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     SizedBox(
-                      height: 120,
+                      height: 100,
                     ),
-                    Row(
+                    Column(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Icon(
-                            Icons.event_busy,
-                            size: 72,
-                          ),
+                        Icon(
+                          Icons.event_busy,
+                          size: 90,
                         ),
                         SizedBox(
                           width: 12,
@@ -33,55 +31,16 @@ class AppointmentOverviewScreen extends StatelessWidget {
                         Text(
                           'Keine Termine',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 36,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text(
-                            'Drücke auf das',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          '+',
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text(
-                            'um einen neuen Termin zu erfassen',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.only(left: 12, right: 35, bottom: 75),
+                      child: Image.asset('assets/images/termin_erfassen.png', fit: BoxFit.contain,),
                     ),
                   ],
                 )
