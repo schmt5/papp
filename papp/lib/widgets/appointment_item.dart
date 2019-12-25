@@ -27,6 +27,7 @@ class AppointmentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('${item.title} ${item.dateTime} ${item.place}');
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(

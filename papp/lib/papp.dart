@@ -20,6 +20,7 @@ import './screens/onboarding_screen.dart';
 import './screens/create_therapy_screen.dart';
 import './screens/create_exercise_screen.dart';
 import './screens/create_private_appointment_screen.dart';
+import './screens/polypoint_demo_screen.dart';
 
 class Papp extends StatelessWidget {
   @override
@@ -70,6 +71,7 @@ class Papp extends StatelessWidget {
                 CreateExerciseScreen.routeName: (ctx) => CreateExerciseScreen(),
                 CreatePrivateAppointmentScreen.routeName: (ctx) =>
                     CreatePrivateAppointmentScreen(),
+                PolypointDemoScreen.routeName: (ctx) => PolypointDemoScreen(),
               },
             ),
           );

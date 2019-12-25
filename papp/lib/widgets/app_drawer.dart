@@ -4,6 +4,7 @@ import '../screens/reward_screen.dart';
 import '../screens/teddy_screen.dart';
 import '../screens/user_screen.dart';
 import '../screens/onboarding_screen.dart';
+import '../screens/polypoint_demo_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -57,6 +58,12 @@ class AppDrawer extends StatelessWidget {
             title: Text('Onboarding'),
             onTap: () {
               Navigator.of(context).pushNamed(OnboardingScreen.routeName);
+            },
+          ),
+           ListTile(
+            title: Text('Polypoint Demo'),
+            onTap: () {
+              Navigator.of(context).pushNamed(PolypointDemoScreen.routeName);
             },
           ),
         ],
