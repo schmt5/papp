@@ -49,14 +49,14 @@ class AppointmentDetailScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              onPressed: () => _scan(context),
+              onPressed: () => _scan(context, item.id),
             )
           : null,
       body: detailWidget,
     );
   }
 
-  _scan(BuildContext ctx) async {
+  _scan(BuildContext ctx, int id) async {
     const int securityKey = 199722369;
     var scannedCode = await BarcodeScanner.scan();
 
@@ -65,9 +65,10 @@ class AppointmentDetailScreen extends StatelessWidget {
       int taler = int.parse(scannedCode.split('.').last);
 
       if (key == securityKey && taler >= 0 && taler <= 3) {
+        var args = [taler, id];
         Navigator.of(ctx).pushNamed(
           CongratulationScreen.routeName,
-          arguments: taler,
+          arguments: args,
         );
       } else {
         return showDialog(

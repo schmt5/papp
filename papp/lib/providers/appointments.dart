@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:papp/models/appointment_type.dart';
+import 'package:papp/models/therapy_model.dart';
 
 import './database_provider.dart';
 import '../models/appointment_model.dart';
@@ -35,6 +37,25 @@ class Appointments with ChangeNotifier {
     upcoming.sort((val, valNext) => val.dateTime.compareTo(valNext.dateTime));
     var nextAppointment = upcoming[0];
     return nextAppointment;
+  }
+
+  double get averageScore {
+    List<TherapyModel> therapyItems = [];
+    _items.forEach((item) {
+      if (item.type == AppointmentType.Therapie) {
+        var val = item as TherapyModel;
+        therapyItems.add(val);
+      }
+    });
+
+    List<TherapyModel> therapyItemWithTaler =
+        therapyItems.where((item) => item.earnedPappTaler != null).toList();
+    var count = therapyItemWithTaler.length.toDouble();
+    var val = therapyItemWithTaler.fold(
+        0, (sum, nextItem) => sum + nextItem.earnedPappTaler);
+    var sumOfTaler = double.parse(val.toString());
+    var score = sumOfTaler / count;
+    return score;
   }
 
   // SQFlite

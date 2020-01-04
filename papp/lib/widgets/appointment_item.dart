@@ -100,7 +100,7 @@ class AppointmentItem extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        onPressed: () => _scan(context),
+                        onPressed: () => _scan(context, item.id),
                         color: Theme.of(context).accentColor,
                       ),
                 OutlineButton(
@@ -133,7 +133,7 @@ class AppointmentItem extends StatelessWidget {
     );
   }
 
-  _scan(BuildContext ctx) async {
+  _scan(BuildContext ctx, int id) async {
     const int securityKey = 199722369;
     var scannedCode = await BarcodeScanner.scan();
 
@@ -142,9 +142,10 @@ class AppointmentItem extends StatelessWidget {
       int taler = int.parse(scannedCode.split('.').last);
 
       if (key == securityKey && taler >= 0 && taler <= 3) {
+        var args = [taler, id];
         Navigator.of(ctx).pushNamed(
           CongratulationScreen.routeName,
-          arguments: taler,
+          arguments: args,
         );
       } else {
         return showDialog(

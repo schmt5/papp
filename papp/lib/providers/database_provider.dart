@@ -79,13 +79,19 @@ class DatabaseProvider {
     });
   }
 
+  Future<void> updateEarnedPappTalerById(int id) {
+
+  }
+
   Future<AppointmentModel> fetchAppointmentById(int id) async {
-    final appointment = await _db.query(
+    final query = await _db.query(
       _appointmentTable,
       columns: null,
       where: 'id = ?',
       whereArgs: [id],
-    ) as Map<String, dynamic>;
+    );
+
+    final Map<String, dynamic> appointment = query[0];
 
     if (appointment == null) {
       return null;

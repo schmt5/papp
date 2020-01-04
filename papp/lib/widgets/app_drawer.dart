@@ -5,6 +5,7 @@ import '../screens/teddy_screen.dart';
 import '../screens/user_screen.dart';
 import '../screens/onboarding_screen.dart';
 import '../screens/polypoint_demo_screen.dart';
+import '../screens/statistic_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -41,6 +42,13 @@ class AppDrawer extends StatelessWidget {
             title: Text('Belohnung'),
             onTap: () {
               Navigator.of(context).pushNamed(RewardScreen.routeName);
+            },
+          ),
+             ListTile(
+            leading: Icon(Icons.show_chart),
+            title: Text('Fortschritt'),
+            onTap: () {
+              Navigator.of(context).pushNamed(StatisticScreen.routeName);
             },
           ),
           // ListTile(

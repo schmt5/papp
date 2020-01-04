@@ -3,15 +3,33 @@ import 'package:provider/provider.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 import '../providers/points.dart';
+import '../providers/appointments.dart';
 import '../screens/home_screen.dart';
+import '../models/therapy_model.dart';
 
 class CongratulationScreen extends StatelessWidget {
   static const routeName = '/congratulation';
 
   @override
   Widget build(BuildContext context) {
-    int taler = ModalRoute.of(context).settings.arguments as int;
+    List<int> args = ModalRoute.of(context).settings.arguments;
+    int id = args[1];
+    int taler = args[0];
     int xp = taler * 10;
+
+    save(BuildContext context) async {
+      var points = Provider.of<Points>(context, listen: false);
+      points.setPappTaler(taler);
+      points.setXp(xp);
+
+      TherapyModel item =
+          await Provider.of<Appointments>(context, listen: false)
+              .getAppointmentById(id);
+      item.earnedPappTaler = taler;
+      Provider.of<Appointments>(context, listen: false).addAppointment(item);
+
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -25,12 +43,7 @@ class CongratulationScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        onPressed: () {
-          var points = Provider.of<Points>(context, listen: false);
-          points.setPappTaler(taler);
-          points.setXp(xp);
-          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-        },
+        onPressed: () => save(context),
       ),
       body: SingleChildScrollView(
         child: Column(
