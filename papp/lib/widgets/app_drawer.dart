@@ -6,6 +6,7 @@ import '../screens/user_screen.dart';
 import '../screens/onboarding_screen.dart';
 import '../screens/polypoint_demo_screen.dart';
 import '../screens/statistic_screen.dart';
+import '../screens/privacy_policy_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -44,13 +45,14 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed(RewardScreen.routeName);
             },
           ),
-             ListTile(
+          ListTile(
             leading: Icon(Icons.show_chart),
             title: Text('Fortschritt'),
             onTap: () {
               Navigator.of(context).pushNamed(StatisticScreen.routeName);
             },
           ),
+          Divider(),
           // ListTile(
           //   leading: Icon(Icons.trending_up),
           //   title: Text('Dein Fortschritt'),
@@ -63,12 +65,20 @@ class AppDrawer extends StatelessWidget {
           //   onTap: () {},
           // ),
           ListTile(
+            leading: Icon(Icons.assignment),
+            title: Text('Datenschutzerklärung'),
+            onTap: () {
+              Navigator.of(context).pushNamed(PrivacyPolicyScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
             title: Text('Onboarding'),
             onTap: () {
               Navigator.of(context).pushNamed(OnboardingScreen.routeName);
             },
           ),
-           ListTile(
+          ListTile(
             title: Text('Polypoint Demo'),
             onTap: () {
               Navigator.of(context).pushNamed(PolypointDemoScreen.routeName);
