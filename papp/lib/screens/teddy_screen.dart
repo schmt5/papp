@@ -126,8 +126,51 @@ class TeddyScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 80,
+                              height: 30,
                             ),
+                            pointData.level > 2
+                                ? ListTile(
+                                    title: Text(
+                                      'Teddys Ausrüstung',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            GridView.count(
+                              shrinkWrap: true,
+                              primary: false,
+                              padding: EdgeInsets.all(20),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount: 3,
+                              children: <Widget>[
+                                pointData.level > 2
+                                    ? Container(
+                                        child: Image.asset(
+                                          'assets/images/boot.png',
+                                        ),
+                                      )
+                                    : Container(),
+                                pointData.level > 4
+                                    ? Container(
+                                        child: Image.asset(
+                                          'assets/images/camping.png',
+                                        ),
+                                      )
+                                    : Container(),
+                                     pointData.level > 8
+                                    ? Container(
+                                        child: Image.asset(
+                                          'assets/images/backpack.png',
+                                        ),
+                                      )
+                                    : Container()
+                              ],
+                            )
                           ],
                         );
                       },
