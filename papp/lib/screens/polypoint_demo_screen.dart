@@ -19,7 +19,9 @@ class PolypointDemoScreen extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () => _scanAppointments(context),
       ),
-      body: Center(),
+      body: Center(
+        child: Text('Scanne den QR-Code ein'),
+      ),
     );
   }
 

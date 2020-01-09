@@ -33,12 +33,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
               isThreeLine: true,
             ),
             ListTile(
-              title: Text('Weitergabe der Daten der Nutzer an Dritte '),
+              title: Text('Weitergabe der Daten an Dritte '),
               subtitle: Text('Die Papp gibt keine Daten an Dritte weiter.'),
               isThreeLine: true,
             ),
             ListTile(
-              title: Text('Ansprüche der Nutzer'),
+              title: Text('Ansprüche der Anwender'),
               subtitle: Text(
                   'Anwender haben das Recht auf Auskunft. Kontaktadresse: thierrypablo.schmidt@students.bfh.ch'),
               isThreeLine: true,

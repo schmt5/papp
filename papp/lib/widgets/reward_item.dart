@@ -177,6 +177,7 @@ class RewardItem extends StatelessWidget {
                             'Details',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
+                              color: Colors.black,
                             ),
                           ),
                           onPressed: () => _showDetailModalSheet(context),
