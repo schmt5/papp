@@ -94,8 +94,8 @@ class NextAppointmentCard extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      onPressed: () =>
-                                          _scan(context, data.nextItem.id),
+                                      onPressed: () => _scan(context,
+                                          data.nextItem.id, data.nextItem.type),
                                       color: Theme.of(context).accentColor,
                                     ),
                               OutlineButton(
@@ -132,7 +132,7 @@ class NextAppointmentCard extends StatelessWidget {
     );
   }
 
-  _scan(BuildContext ctx, int id) async {
+  _scan(BuildContext ctx, int id, AppointmentType type) async {
     const int securityKey = 199722369;
     var scannedCode = await BarcodeScanner.scan();
 
@@ -141,7 +141,7 @@ class NextAppointmentCard extends StatelessWidget {
       int taler = int.parse(scannedCode.split('.').last);
 
       if (key == securityKey && taler >= 0 && taler <= 3) {
-        var args = [taler, id];
+        var args = [taler, id, type.index];
         Navigator.of(ctx).pushNamed(
           CongratulationScreen.routeName,
           arguments: args,

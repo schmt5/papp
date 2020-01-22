@@ -6,6 +6,7 @@ import '../models/reward_model.dart';
 import '../models/reward_type.dart';
 import '../widgets/papp_taler_card.dart';
 import '../widgets/bell_card.dart';
+import './get_reward_screen.dart';
 
 class UserScreen extends StatelessWidget {
   static const routeName = '/user';
@@ -44,7 +45,6 @@ class UserScreen extends StatelessWidget {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Container(
                       color: Theme.of(context).primaryColor.withOpacity(0.7),
-                      
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
@@ -131,9 +131,9 @@ class UserScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
                                 ),
-                                child: pointData.xp < 50
+                                child: pointData.pappTaler < 50
                                     ? Text(
-                                        'Papp-Taler einlösen (Dir fehlen noch ${50 - pointData.pappTaler} Papp-Taler)',
+                                        'Papp-Taler einlösen (${50 - pointData.pappTaler} fehlend)',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
@@ -155,8 +155,13 @@ class UserScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
-                              onPressed:
-                                  pointData.pappTaler < 50 ? null : () {},
+                              onPressed: pointData.pappTaler < 50
+                                  ? null
+                                  : () {
+                                      Navigator.of(context).pushNamed(
+                                          GetRewardScreen.routeName,
+                                          arguments: pointData.choosenReward);
+                                    },
                             ),
                           ),
                         ],

@@ -6,6 +6,7 @@ import '../providers/points.dart';
 import '../providers/appointments.dart';
 import '../screens/home_screen.dart';
 import '../models/therapy_model.dart';
+import '../models/appointment_type.dart';
 
 class CongratulationScreen extends StatelessWidget {
   static const routeName = '/congratulation';
@@ -16,17 +17,20 @@ class CongratulationScreen extends StatelessWidget {
     int id = args[1];
     int taler = args[0];
     int xp = taler * 10;
+    int type = args[2];
 
     save(BuildContext context) async {
       var points = Provider.of<Points>(context, listen: false);
       points.setPappTaler(taler);
       points.setXp(xp);
 
-      TherapyModel item =
-          await Provider.of<Appointments>(context, listen: false)
-              .getAppointmentById(id);
-      item.earnedPappTaler = taler;
-      Provider.of<Appointments>(context, listen: false).addAppointment(item);
+      if (type == AppointmentType.Therapie.index) {
+        TherapyModel item =
+            await Provider.of<Appointments>(context, listen: false)
+                .getAppointmentById(id);
+        item.earnedPappTaler = taler;
+        Provider.of<Appointments>(context, listen: false).addAppointment(item);
+      }
 
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     }

@@ -23,6 +23,7 @@ import './screens/create_private_appointment_screen.dart';
 import './screens/polypoint_demo_screen.dart';
 import './screens/statistic_screen.dart';
 import './screens/privacy_policy_screen.dart';
+import './screens/get_reward_screen.dart';
 
 class Papp extends StatelessWidget {
   @override
@@ -76,6 +77,7 @@ class Papp extends StatelessWidget {
                 PolypointDemoScreen.routeName: (ctx) => PolypointDemoScreen(),
                 StatisticScreen.routeName: (ctx) => StatisticScreen(),
                 PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
+                GetRewardScreen.routeName: (ctx) => GetRewardScreen(),
               },
             ),
           );

@@ -57,70 +57,74 @@ class AppointmentDetailScreen extends StatelessWidget {
   }
 
   _scan(BuildContext ctx, int id) async {
-    const int securityKey = 199722369;
-    var scannedCode = await BarcodeScanner.scan();
+    var args = [3, id];
+    Navigator.of(ctx).pushNamed(CongratulationScreen.routeName, arguments: args);
 
-    try {
-      int key = int.parse(scannedCode.split('.').first);
-      int taler = int.parse(scannedCode.split('.').last);
+    // comment for presi
+    // const int securityKey = 199722369;
+    // var scannedCode = await BarcodeScanner.scan();
 
-      if (key == securityKey && taler >= 0 && taler <= 3) {
-        var args = [taler, id];
-        Navigator.of(ctx).pushNamed(
-          CongratulationScreen.routeName,
-          arguments: args,
-        );
-      } else {
-        return showDialog(
-          context: ctx,
-          builder: (ctx) => AlertDialog(
-            title: Text(
-              'Falscher QR Code',
-            ),
-            content: Center(
-              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
-            ),
-            actions: <Widget>[
-              RaisedButton(
-                child: Text(
-                  'Verstanden',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-              )
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      return showDialog(
-        context: ctx,
-        builder: (ctx) => AlertDialog(
-          title: Text('Falscher QR Code'),
-          content: Center(
-            child: Container(
-              height: 100,
-              child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
-            ),
-          ),
-          actions: <Widget>[
-            RaisedButton(
-              child: Text(
-                'Verstanden',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
-        ),
-      );
-    }
+    // try {
+    //   int key = int.parse(scannedCode.split('.').first);
+    //   int taler = int.parse(scannedCode.split('.').last);
+
+    //   if (key == securityKey && taler >= 0 && taler <= 3) {
+    //     var args = [taler, id];
+    //     Navigator.of(ctx).pushNamed(
+    //       CongratulationScreen.routeName,
+    //       arguments: args,
+    //     );
+    //   } else {
+    //     return showDialog(
+    //       context: ctx,
+    //       builder: (ctx) => AlertDialog(
+    //         title: Text(
+    //           'Falscher QR Code',
+    //         ),
+    //         content: Center(
+    //           child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+    //         ),
+    //         actions: <Widget>[
+    //           RaisedButton(
+    //             child: Text(
+    //               'Verstanden',
+    //               style: TextStyle(color: Colors.white),
+    //             ),
+    //             onPressed: () {
+    //               Navigator.of(ctx).pop();
+    //             },
+    //           )
+    //         ],
+    //       ),
+    //     );
+    //   }
+    // } catch (e) {
+    //   return showDialog(
+    //     context: ctx,
+    //     builder: (ctx) => AlertDialog(
+    //       title: Text('Falscher QR Code'),
+    //       content: Center(
+    //         child: Container(
+    //           height: 100,
+    //           child: Text('Es scheint, als wäre dies kein korrekter QR Code.'),
+    //         ),
+    //       ),
+    //       actions: <Widget>[
+    //         RaisedButton(
+    //           child: Text(
+    //             'Verstanden',
+    //             textAlign: TextAlign.center,
+    //             style: TextStyle(
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //           onPressed: () {
+    //             Navigator.of(ctx).pop();
+    //           },
+    //         )
+    //       ],
+    //     ),
+    //   );
+    // }
   }
 }
