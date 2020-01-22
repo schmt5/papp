@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:provider/provider.dart';
 
 import '../models/appointment_model.dart';
 import '../models/appointment_type.dart';
@@ -10,6 +11,7 @@ import '../widgets/therapy_details.dart';
 import '../widgets/private_appointment_details.dart';
 import '../widgets/exercise_details.dart';
 import '../screens/congratulation_screen.dart';
+import '../providers/appointments.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
   static const routeName = '/appointment-detail';
@@ -38,6 +40,15 @@ class AppointmentDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Termin Details'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              Provider.of<Appointments>(context).deleteItemById(item.id);
+              Navigator.of(context).pop();
+            },
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: item.type == AppointmentType.Therapie
@@ -58,7 +69,8 @@ class AppointmentDetailScreen extends StatelessWidget {
 
   _scan(BuildContext ctx, int id) async {
     var args = [3, id];
-    Navigator.of(ctx).pushNamed(CongratulationScreen.routeName, arguments: args);
+    Navigator.of(ctx)
+        .pushNamed(CongratulationScreen.routeName, arguments: args);
 
     // comment for presi
     // const int securityKey = 199722369;

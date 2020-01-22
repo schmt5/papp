@@ -79,9 +79,7 @@ class DatabaseProvider {
     });
   }
 
-  Future<void> updateEarnedPappTalerById(int id) {
-
-  }
+  Future<void> updateEarnedPappTalerById(int id) {}
 
   Future<AppointmentModel> fetchAppointmentById(int id) async {
     final query = await _db.query(
@@ -114,6 +112,14 @@ class DatabaseProvider {
       _appointmentTable,
       appointment.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  void deleteAppointmentById(int id) async {
+    await _db.delete(
+      _appointmentTable,
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 }

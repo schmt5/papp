@@ -80,4 +80,11 @@ class Appointments with ChangeNotifier {
     DatabaseProvider.dbProvider.insertAppointment(appointment);
     notifyListeners();
   }
+
+  void deleteItemById(int id) {
+    print('delete item: $id');
+    _items.removeWhere((item) => item.id == id);
+    DatabaseProvider.dbProvider.deleteAppointmentById(id);
+    notifyListeners();
+  }
 }
